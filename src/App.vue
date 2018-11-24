@@ -28,10 +28,7 @@ export default {
     value: [1],
     multiple: true,
     search: true,
-
   }),
-  async created() {
-  },
   methods: {
     change(val) {
       console.log(val);

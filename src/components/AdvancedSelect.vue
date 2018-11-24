@@ -2,7 +2,9 @@
   <div class="btn-group">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false">
-      {{values}} <span class="caret"></span>
+      <span v-if="values.length">{{valuesText}}</span>
+      <span v-else :class="$style.placeholder">{{texts.placeholder}}</span>
+      &nbsp;<span class="caret"></span>
     </button>
     <ul :class="[$style['dropdown-menu'], 'dropdown-menu']">
       <li v-if="controls && multiple" :class="$style.controls">
@@ -33,7 +35,10 @@
         :class="{ 'active': !multiple && !!selected[option.value] }">
         <a href="#" @click="select($event, option.value)">
           {{option.text}}
-          <i v-if="multiple" class="glyphicon" :class="{ 'glyphicon-ok': !!selected[option.value] }"></i>
+          <i v-if="multiple"
+            class="glyphicon"
+            :class="{ 'glyphicon-ok': !!selected[option.value] }">
+          </i>
         </a>
       </li>
     </ul>
@@ -61,6 +66,9 @@
 .empty {
   padding: 3px 20px;
 }
+.placeholder {
+  color: #777777;
+}
 </style>
 
 <script type="text/javascript">
@@ -87,6 +95,7 @@ export default {
     },
     texts: {
       default: () => ({
+        placeholder: 'Nothing selected',
         empty: 'No results',
         selectAll: 'Select all',
         selectNone: 'Select none',
@@ -102,7 +111,10 @@ export default {
   },
   computed: {
     values() {
-      return Object.values(this.selected).map(o => o.text).join(', ');
+      return Object.values(this.selected).map(o => o.text);
+    },
+    valuesText() {
+      return this.values.join(', ');
     },
     optionsMap() {
       return this.filtered.reduce((m, o) => Object.assign(m, { [o.value]: o }), {});
