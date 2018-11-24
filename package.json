@@ -1,0 +1,51 @@
+{
+  "name": "@myena/advanced-select",
+  "description": "Vue Advanced Select control used in ENA projects",
+  "libname": "MyEna",
+  "version": "0.1.0",
+  "repository": "github:myENA/advanced-select",
+  "keywords": [
+    "vue",
+    "select",
+    "bootstrap"
+  ],
+  "author": "Andy Ghiuta <andy.ghiuta@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "node build.js",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit",
+    "preversion": "npm run test:unit && npm run build && git add -A dist",
+    "postversion": "git push && git push --tags && echo Run: \"npm publish\""
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist/*",
+    "src/components/*"
+  ],
+  "peerDependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.3.1",
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-eslint": "^3.0.5",
+    "@vue/cli-plugin-unit-mocha": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "@vue/eslint-config-airbnb": "^3.0.5",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "bootstrap": "^3.3.7",
+    "chai": "^4.1.2",
+    "font-awesome": "^4.7.0",
+    "glob": "^7.1.3",
+    "jquery": "^3.3.1",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "vue": "^2.5.17",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "dependencies": {}
+}
