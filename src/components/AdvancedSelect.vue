@@ -30,10 +30,10 @@
         </span>
       </li>
       <li v-else v-for="option in filtered" :key="option.value"
-        :class="{ 'active': !!selected[option.value] }">
+        :class="{ 'active': !multiple && !!selected[option.value] }">
         <a href="#" @click="select($event, option.value)">
           {{option.text}}
-          <i class="glyphicon" :class="{ 'glyphicon-ok': !!selected[option.value] }"></i>
+          <i v-if="multiple" class="glyphicon" :class="{ 'glyphicon-ok': !!selected[option.value] }"></i>
         </a>
       </li>
     </ul>
