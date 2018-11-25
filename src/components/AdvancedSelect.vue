@@ -110,7 +110,7 @@ export default {
       type: Boolean,
     },
     controls: {
-      default: true,
+      default: false,
       type: Boolean,
     },
     displayMax: {
