@@ -31,25 +31,27 @@
           {{texts.empty}}
         </span>
       </li>
-      <template v-else>
-        <li v-for="option in filtered" :key="option.value || option.header"
-          :class="{
-            'dropdown-header': option.header,
-            active: !multiple && !!selected[option.value]
-          }">
-          <span v-if="option.header">
-            {{option.header}}
-          </span>
-          <a v-else
-            href="#" @click="select($event, option.value)">
-            {{option.text}}
-            <i v-if="multiple"
-              class="glyphicon"
-              :class="{ 'glyphicon-ok': !!selected[option.value] }">
-            </i>
-          </a>
-        </li>
-      </template>
+      <li v-else>
+        <ul :class="[$style['dropdown-menu'], 'dropdown-menu', $style.items]">
+          <li v-for="option in filtered" :key="option.value || option.header"
+            :class="{
+              'dropdown-header': option.header,
+              active: !multiple && !!selected[option.value]
+            }">
+            <span v-if="option.header">
+              {{option.header}}
+            </span>
+            <a v-else
+              href="#" @click="select($event, option.value)">
+              {{option.text}}
+              <i v-if="multiple"
+                class="glyphicon"
+                :class="{ 'glyphicon-ok': !!selected[option.value] }">
+              </i>
+            </a>
+          </li>
+        </ul>
+      </li>
     </ul>
   </div>
 </template>
@@ -77,6 +79,17 @@
 }
 .placeholder {
   color: #777777;
+}
+.items {
+  display: block;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+  width: 100%;
+  max-height: 200px;
+  overflow: auto;
 }
 </style>
 
