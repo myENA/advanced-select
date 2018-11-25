@@ -31,16 +31,25 @@
           {{texts.empty}}
         </span>
       </li>
-      <li v-else v-for="option in filtered" :key="option.value"
-        :class="{ 'active': !multiple && !!selected[option.value] }">
-        <a href="#" @click="select($event, option.value)">
-          {{option.text}}
-          <i v-if="multiple"
-            class="glyphicon"
-            :class="{ 'glyphicon-ok': !!selected[option.value] }">
-          </i>
-        </a>
-      </li>
+      <template v-else>
+        <li v-for="option in filtered" :key="option.value || option.header"
+          :class="{
+            'dropdown-header': option.header,
+            active: !multiple && !!selected[option.value]
+          }">
+          <span v-if="option.header">
+            {{option.header}}
+          </span>
+          <a v-else
+            href="#" @click="select($event, option.value)">
+            {{option.text}}
+            <i v-if="multiple"
+              class="glyphicon"
+              :class="{ 'glyphicon-ok': !!selected[option.value] }">
+            </i>
+          </a>
+        </li>
+      </template>
     </ul>
   </div>
 </template>
@@ -117,30 +126,45 @@ export default {
       return this.values.join(', ');
     },
     optionsMap() {
-      return this.filtered.reduce((m, o) => Object.assign(m, { [o.value]: o }), {});
+      return this.getOptionsMap(this.filtered);
     },
     selected() {
       let selected = {};
       if (this.myValue) {
-        if (this.multiple) {
-          selected = this.myValue.reduce((s, v) => {
-            if (this.optionsMap[v]) {
-              Object.assign(s, {
-                [v]: this.optionsMap[v],
-              });
-            }
-            return s;
-          }, {});
-        } else {
-          const opt = this.filtered.find(o => o.value === this.myValue);
-          selected = opt ? { [this.myValue]: opt } : {};
+        let { myValue } = this;
+        if (!this.multiple) {
+          myValue = [this.myValue];
         }
+        selected = myValue.reduce((s, v) => {
+          if (this.optionsMap[v]) {
+            Object.assign(s, {
+              [v]: this.optionsMap[v],
+            });
+          }
+          return s;
+        }, {});
       }
       return selected;
     },
     filtered() {
-      return this.options.filter(o =>
-        o.text.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1);
+      return this.options.reduce((f, o) => {
+        if (o.options) {
+          // filter this group
+          const group = o.options.filter(this.optionMatch);
+          if (group.length) {
+            // push the header
+            f.push({
+              header: o.label,
+            });
+            // push the rest of the items
+            f.push(...group);
+          }
+        } else if (this.optionMatch(o)) {
+          // it's an item without group, push it to the list
+          f.push(o);
+        }
+        return f;
+      }, []);
     },
     emptyResults() {
       return this.search && this.filtered.length === 0 && this.filter;
@@ -153,6 +177,17 @@ export default {
     },
   },
   methods: {
+    getOptionsMap(options, map = {}) {
+      return options.reduce((m, o) => {
+        if (!o.header) {
+          Object.assign(m, { [o.value]: o });
+        }
+        return m;
+      }, map);
+    },
+    optionMatch(o) {
+      return o.text.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1;
+    },
     select(e, val) {
       let newVal;
       // for multiple, don't close the menu

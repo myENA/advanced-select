@@ -24,6 +24,22 @@ export default {
     options: [
       { value: 1, text: 'One' },
       { value: 2, text: 'Very long option Very long option Very long option' },
+      {
+        label: 'Group 1',
+        options: [
+          { value: 3, text: 'Three' },
+          { value: 4, text: 'Four' },
+          { value: 5, text: 'Five' },
+        ],
+      },
+      {
+        label: 'Group 2',
+        options: [
+          { value: 6, text: 'Six' },
+          { value: 7, text: 'Seven' },
+          { value: 8, text: 'Eight' },
+        ],
+      },
     ],
     value: [1],
     multiple: true,
