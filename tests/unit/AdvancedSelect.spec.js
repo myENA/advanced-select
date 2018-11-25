@@ -20,6 +20,24 @@ describe('AdvancedSelect.vue', () => {
       });
       expect(wrapper.findAll('div.btn-group > ul > li > a')).to.have.lengthOf(2);
     });
+    it('grouped options', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [
+            { text: '1', value: 1 },
+            { text: '2', value: 2 },
+            {
+              label: 'Group',
+              options: [
+                { text: '3', value: 3 },
+              ],
+            },
+          ],
+        },
+      });
+      expect(wrapper.findAll('div.btn-group > ul > li > a')).to.have.lengthOf(3);
+      expect(wrapper.findAll('div.btn-group > ul > li')).to.have.lengthOf(4);
+    });
     it('an input when "search" is true', () => {
       const wrapper = shallowMount(Select, {
         propsData: {
@@ -67,12 +85,32 @@ describe('AdvancedSelect.vue', () => {
       });
       expect(wrapper.vm.myValue).to.equal(null);
       const links = wrapper.findAll('div.btn-group > ul > li > a');
-      const firstItem = links.at(0);
-      firstItem.trigger('click');
+      links.at(0).trigger('click');
       expect(wrapper.vm.myValue).to.equal(1);
-      const secondItem = links.at(1);
-      secondItem.trigger('click');
+      links.at(1).trigger('click');
       expect(wrapper.vm.myValue).to.equal(2);
+    });
+    it('Value is set on grouped items', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [
+            { text: '1', value: 1 },
+            { text: '2', value: 2 },
+            {
+              label: 'Group',
+              options: [
+                { text: '3', value: 3 },
+              ],
+            },
+          ],
+        },
+      });
+      expect(wrapper.vm.myValue).to.equal(null);
+      const links = wrapper.findAll('div.btn-group > ul > li > a');
+      links.at(0).trigger('click');
+      expect(wrapper.vm.myValue).to.equal(1);
+      links.at(2).trigger('click');
+      expect(wrapper.vm.myValue).to.equal(3);
     });
     it('Value is set on multiple type', () => {
       const wrapper = shallowMount(Select, {
@@ -83,11 +121,9 @@ describe('AdvancedSelect.vue', () => {
       });
       expect(wrapper.vm.myValue).to.equal(null);
       const links = wrapper.findAll('div.btn-group > ul > li > a');
-      const firstItem = links.at(0);
-      firstItem.trigger('click');
+      links.at(0).trigger('click');
       expect(wrapper.vm.myValue).to.deep.equal([1]);
-      const secondItem = links.at(1);
-      secondItem.trigger('click');
+      links.at(1).trigger('click');
       expect(wrapper.vm.myValue).to.deep.equal([1, 2]);
     });
     it('Event is emmited on single type with selected value', () => {
@@ -97,8 +133,7 @@ describe('AdvancedSelect.vue', () => {
         },
       });
       const links = wrapper.findAll('div.btn-group > ul > li > a');
-      const firstItem = links.at(0);
-      firstItem.trigger('click');
+      links.at(0).trigger('click');
       expect(wrapper.emitted().change).to.exist;
       expect(wrapper.emitted().change[0][0]).to.deep.equal(1);
     });
