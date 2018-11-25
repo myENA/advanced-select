@@ -151,13 +151,17 @@ export default {
         if (o.options) {
           // filter this group
           const group = o.options.filter(this.optionMatch);
-          if (group.length) {
+          if (this.textMatch(o.label) || group.length) {
             // push the header
             f.push({
               header: o.label,
             });
             // push the rest of the items
-            f.push(...group);
+            if (group.length) {
+              f.push(...group);
+            } else {
+              f.push(...o.options);
+            }
           }
         } else if (this.optionMatch(o)) {
           // it's an item without group, push it to the list
@@ -168,6 +172,9 @@ export default {
     },
     emptyResults() {
       return this.search && this.filtered.length === 0 && this.filter;
+    },
+    filterRegExp() {
+      return new RegExp(`${this.filter}`, 'ig');
     },
   },
   watch: {
@@ -186,7 +193,10 @@ export default {
       }, map);
     },
     optionMatch(o) {
-      return o.text.toLowerCase().indexOf(this.filter.toLowerCase()) !== -1;
+      return this.textMatch(o.text);
+    },
+    textMatch(text) {
+      return this.filterRegExp.test(text);
     },
     select(e, val) {
       let newVal;
