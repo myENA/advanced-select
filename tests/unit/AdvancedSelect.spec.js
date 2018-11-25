@@ -182,5 +182,50 @@ describe('AdvancedSelect.vue', () => {
       expect(wrapper.emitted().change).to.exist;
       expect(wrapper.emitted().change[1][0]).to.deep.equal([1, 2]);
     });
+    it('All values are set on "Select all"', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [
+            { text: '1', value: 1 },
+            { text: '2', value: 2 },
+            {
+              label: 'Group',
+              options: [
+                { text: '3', value: 3 },
+              ],
+            },
+          ],
+          multiple: true,
+          controls: true,
+        },
+      });
+      const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
+      links.at(0).trigger('click');
+      expect(wrapper.emitted().change).to.exist;
+      expect(wrapper.emitted().change[0][0].length).to.equal(3);
+      expect(wrapper.emitted().change[0][0]).to.deep.equal([1, 2, 3]);
+    });
+    it('No values are set on "Select none"', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [
+            { text: '1', value: 1 },
+            { text: '2', value: 2 },
+            {
+              label: 'Group',
+              options: [
+                { text: '3', value: 3 },
+              ],
+            },
+          ],
+          multiple: true,
+          controls: true,
+        },
+      });
+      const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
+      links.at(1).trigger('click');
+      expect(wrapper.emitted().change).to.exist;
+      expect(wrapper.emitted().change[0][0]).to.deep.equal([]);
+    });
   });
 });
