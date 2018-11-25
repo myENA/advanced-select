@@ -249,15 +249,14 @@ export default {
       return this.filterRegExp.test(text);
     },
     select(e, val) {
+      e.preventDefault();
       if (this.optionsMap[val].disabled) {
-        e.preventDefault();
         e.stopPropagation();
         return;
       }
       let newVal;
       // for multiple, don't close the menu
       if (this.multiple) {
-        e.preventDefault();
         e.stopPropagation();
         // update the new selected items
         newVal = Object.keys(this.selected).map(k => this.selected[k].value);
