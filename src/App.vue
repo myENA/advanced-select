@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="container-fluid">
+    <div class="top"></div>
     <advanced-select
       v-model="value"
       :options="options"
@@ -7,6 +8,7 @@
       :multiple="multiple"
       :displayMax="displayMax"
       />
+    <div class="bottom"></div>
   </div>
 </template>
 
@@ -55,4 +57,7 @@ export default {
 </script>
 
 <style lang="less">
+.top, .bottom {
+  height: 800px;
+}
 </style>

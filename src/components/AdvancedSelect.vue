@@ -1,5 +1,5 @@
 <template>
-  <div class="btn-group">
+  <div class="btn-group" :class="{ dropup }">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false">
       <span v-if="values.length">{{valuesText}}</span>
@@ -138,6 +138,7 @@ export default {
     return {
       myValue: this.value,
       filter: '',
+      dropup: false,
     };
   },
   computed: {
@@ -208,7 +209,26 @@ export default {
       this.$emit('input', newVal);
     },
   },
+  mounted() {
+    this.computeDropup();
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          this.computeDropup();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  },
   methods: {
+    computeDropup() {
+      const rect = this.$el.getBoundingClientRect();
+      const bodyH = window.innerHeight;
+      this.dropup = rect.top > bodyH / 2;
+    },
     getOptionsMap(options, map = {}) {
       return options.reduce((m, o) => {
         if (!o.header) {
