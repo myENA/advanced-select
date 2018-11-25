@@ -205,7 +205,7 @@ export default {
   watch: {
     myValue(newVal) {
       // emit the change event with the new value
-      this.$emit('change', newVal);
+      this.$emit('input', newVal);
     },
   },
   methods: {

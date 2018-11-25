@@ -176,8 +176,8 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(0).trigger('click');
-      expect(wrapper.emitted().change).to.exist;
-      expect(wrapper.emitted().change[0][0]).to.deep.equal(1);
+      expect(wrapper.emitted().input).to.exist;
+      expect(wrapper.emitted().input[0][0]).to.deep.equal(1);
     });
     it('Event is emmited on multiple type with selected value', () => {
       const wrapper = shallowMount(Select, {
@@ -188,11 +188,11 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(0).trigger('click');
-      expect(wrapper.emitted().change).to.exist;
-      expect(wrapper.emitted().change[0][0]).to.deep.equal([1]);
+      expect(wrapper.emitted().input).to.exist;
+      expect(wrapper.emitted().input[0][0]).to.deep.equal([1]);
       links.at(1).trigger('click');
-      expect(wrapper.emitted().change).to.exist;
-      expect(wrapper.emitted().change[1][0]).to.deep.equal([1, 2]);
+      expect(wrapper.emitted().input).to.exist;
+      expect(wrapper.emitted().input[1][0]).to.deep.equal([1, 2]);
     });
     it('Disabled item is not triggering change', () => {
       const wrapper = shallowMount(Select, {
@@ -205,10 +205,10 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(1).trigger('click');
-      expect(wrapper.emitted().change).to.not.exist;
+      expect(wrapper.emitted().input).to.not.exist;
       links.at(0).trigger('click');
-      expect(wrapper.emitted().change).to.exist;
-      expect(wrapper.emitted().change[0][0]).to.equal(1);
+      expect(wrapper.emitted().input).to.exist;
+      expect(wrapper.emitted().input[0][0]).to.equal(1);
     });
     it('All values are set on "Select all"', () => {
       const wrapper = shallowMount(Select, {
@@ -229,9 +229,9 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
       links.at(0).trigger('click');
-      expect(wrapper.emitted().change).to.exist;
-      expect(wrapper.emitted().change[0][0].length).to.equal(3);
-      expect(wrapper.emitted().change[0][0]).to.deep.equal([1, 2, 3]);
+      expect(wrapper.emitted().input).to.exist;
+      expect(wrapper.emitted().input[0][0].length).to.equal(3);
+      expect(wrapper.emitted().input[0][0]).to.deep.equal([1, 2, 3]);
     });
     it('No values are set on "Select none"', () => {
       const wrapper = shallowMount(Select, {
@@ -252,8 +252,8 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
       links.at(1).trigger('click');
-      expect(wrapper.emitted().change).to.exist;
-      expect(wrapper.emitted().change[0][0]).to.deep.equal([]);
+      expect(wrapper.emitted().input).to.exist;
+      expect(wrapper.emitted().input[0][0]).to.deep.equal([]);
     });
   });
 });
