@@ -18,7 +18,7 @@ describe('AdvancedSelect.vue', () => {
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
         },
       });
-      expect(wrapper.findAll('div.btn-group > ul > li > a')).to.have.lengthOf(2);
+      expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(2);
     });
     it('grouped options', () => {
       const wrapper = shallowMount(Select, {
@@ -35,8 +35,8 @@ describe('AdvancedSelect.vue', () => {
           ],
         },
       });
-      expect(wrapper.findAll('div.btn-group > ul > li > a')).to.have.lengthOf(3);
-      expect(wrapper.findAll('div.btn-group > ul > li')).to.have.lengthOf(4);
+      expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(3);
+      expect(wrapper.findAll('div.btn-group > ul > li > ul > li')).to.have.lengthOf(4);
     });
     it('an input when "search" is true', () => {
       const wrapper = shallowMount(Select, {
@@ -75,6 +75,36 @@ describe('AdvancedSelect.vue', () => {
         expect(wrapper.contains('div.btn-group > ul > li > .btn-group')).to.be.false;
       });
     });
+    it('no selected items shows the placeholder', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
+        },
+      });
+      expect(wrapper.find('div.btn-group > button > span').text()).to.equal('Nothing selected');
+    });
+    it('selected items shows the value for less than displayMax', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
+          displayMax: 1,
+          multiple: true,
+          value: [1],
+        },
+      });
+      expect(wrapper.find('div.btn-group > button > span').text()).to.equal('1');
+    });
+    it('selected items shows aggrgate text for more than displayMax', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
+          displayMax: 1,
+          multiple: true,
+          value: [1, 2],
+        },
+      });
+      expect(wrapper.find('div.btn-group > button > span').text()).to.equal('2 items selected');
+    });
   });
   describe('actions', () => {
     it('Value is set on single type', () => {
@@ -84,7 +114,7 @@ describe('AdvancedSelect.vue', () => {
         },
       });
       expect(wrapper.vm.myValue).to.equal(null);
-      const links = wrapper.findAll('div.btn-group > ul > li > a');
+      const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(0).trigger('click');
       expect(wrapper.vm.myValue).to.equal(1);
       links.at(1).trigger('click');
@@ -106,7 +136,7 @@ describe('AdvancedSelect.vue', () => {
         },
       });
       expect(wrapper.vm.myValue).to.equal(null);
-      const links = wrapper.findAll('div.btn-group > ul > li > a');
+      const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(0).trigger('click');
       expect(wrapper.vm.myValue).to.equal(1);
       links.at(2).trigger('click');
@@ -120,7 +150,7 @@ describe('AdvancedSelect.vue', () => {
         },
       });
       expect(wrapper.vm.myValue).to.equal(null);
-      const links = wrapper.findAll('div.btn-group > ul > li > a');
+      const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(0).trigger('click');
       expect(wrapper.vm.myValue).to.deep.equal([1]);
       links.at(1).trigger('click');
@@ -132,7 +162,7 @@ describe('AdvancedSelect.vue', () => {
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
         },
       });
-      const links = wrapper.findAll('div.btn-group > ul > li > a');
+      const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(0).trigger('click');
       expect(wrapper.emitted().change).to.exist;
       expect(wrapper.emitted().change[0][0]).to.deep.equal(1);
@@ -144,7 +174,7 @@ describe('AdvancedSelect.vue', () => {
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
         },
       });
-      const links = wrapper.findAll('div.btn-group > ul > li > a');
+      const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(0).trigger('click');
       expect(wrapper.emitted().change).to.exist;
       expect(wrapper.emitted().change[0][0]).to.deep.equal([1]);

@@ -111,6 +111,14 @@ export default {
       default: true,
       type: Boolean,
     },
+    displayMax: {
+      default: 0,
+      type: Number,
+    },
+    displayText: {
+      default: '{0} items selected',
+      type: String,
+    },
     options: {
       default: () => ([]),
       type: Array,
@@ -136,6 +144,9 @@ export default {
       return Object.values(this.selected).map(o => o.text);
     },
     valuesText() {
+      if (this.displayMax && this.displayMax < this.values.length) {
+        return this.displayText.replace('{0}', this.values.length);
+      }
       return this.values.join(', ');
     },
     optionsMap() {

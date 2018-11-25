@@ -5,6 +5,7 @@
       :options="options"
       :search="search"
       :multiple="multiple"
+      :displayMax="displayMax"
       @change="change"
       />
   </div>
@@ -44,6 +45,7 @@ export default {
     value: [1],
     multiple: true,
     search: true,
+    displayMax: 3,
   }),
   methods: {
     change(val) {
