@@ -36,7 +36,8 @@
           <li v-for="option in filtered" :key="option.value || option.header"
             :class="{
               'dropdown-header': option.header,
-              active: !multiple && !!selected[option.value]
+              active: !multiple && !!selected[option.value],
+              disabled: option.disabled,
             }">
             <span v-if="option.header">
               {{option.header}}
@@ -223,6 +224,11 @@ export default {
       return this.filterRegExp.test(text);
     },
     select(e, val) {
+      if (this.optionsMap[val].disabled) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
       let newVal;
       // for multiple, don't close the menu
       if (this.multiple) {

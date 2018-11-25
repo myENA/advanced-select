@@ -105,6 +105,18 @@ describe('AdvancedSelect.vue', () => {
       });
       expect(wrapper.find('div.btn-group > button > span').text()).to.equal('2 items selected');
     });
+    it('disabled items', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [
+            { text: '1', value: 1 },
+            { text: '2', value: 2, disabled: true },
+            { text: '3', value: 3, disabled: true },
+          ],
+        },
+      });
+      expect(wrapper.findAll('div.btn-group > ul > li > ul > li.disabled').length).to.equal(2);
+    });
   });
   describe('actions', () => {
     it('Value is set on single type', () => {
@@ -181,6 +193,22 @@ describe('AdvancedSelect.vue', () => {
       links.at(1).trigger('click');
       expect(wrapper.emitted().change).to.exist;
       expect(wrapper.emitted().change[1][0]).to.deep.equal([1, 2]);
+    });
+    it('Disabled item is not triggering change', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [
+            { text: '1', value: 1 },
+            { text: '2', value: 2, disabled: true },
+          ],
+        },
+      });
+      const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
+      links.at(1).trigger('click');
+      expect(wrapper.emitted().change).to.not.exist;
+      links.at(0).trigger('click');
+      expect(wrapper.emitted().change).to.exist;
+      expect(wrapper.emitted().change[0][0]).to.equal(1);
     });
     it('All values are set on "Select all"', () => {
       const wrapper = shallowMount(Select, {

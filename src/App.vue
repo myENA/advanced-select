@@ -29,7 +29,7 @@ export default {
         label: 'Group 1',
         options: [
           { value: 3, text: 'Three' },
-          { value: 4, text: 'Four' },
+          { value: 4, text: 'Four', disabled: true },
           { value: 5, text: 'Five' },
         ],
       },
