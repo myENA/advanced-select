@@ -1590,8 +1590,8 @@ var web_dom_iterable = __webpack_require__("ac6a");
 var external_vue_ = __webpack_require__("8bbf");
 var external_vue_default = /*#__PURE__*/__webpack_require__.n(external_vue_);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"52c9b316-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AdvancedSelect.vue?vue&type=template&id=73287b4b&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"btn-group"},[_c('button',{staticClass:"btn btn-default dropdown-toggle",attrs:{"type":"button","data-toggle":"dropdown","aria-haspopup":"true","aria-expanded":"false"}},[(_vm.values.length)?_c('span',[_vm._v(_vm._s(_vm.valuesText))]):_c('span',{class:_vm.$style.placeholder},[_vm._v(_vm._s(_vm.texts.placeholder))]),_vm._v("\n     "),_c('span',{staticClass:"caret"})]),_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu']},[(_vm.controls && _vm.multiple)?_c('li',{class:_vm.$style.controls},[_c('div',{staticClass:"btn-group btn-group-justified",attrs:{"role":"group","aria-label":"global actions"}},[_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectAll($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectAll)+"\n          ")])]),_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectNone($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectNone)+"\n          ")])])])]):_vm._e(),(_vm.search)?_c('li',{class:_vm.$style.search},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.filter),expression:"filter"}],staticClass:"form-control",attrs:{"placeholder":"Search"},domProps:{"value":(_vm.filter)},on:{"input":function($event){if($event.target.composing){ return; }_vm.filter=$event.target.value}}})]):_vm._e(),(_vm.emptyResults)?_c('li',{class:_vm.$style.empty},[_c('span',{staticClass:"text-muted"},[_vm._v("\n        "+_vm._s(_vm.texts.empty)+"\n      ")])]):_c('li',[_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu', _vm.$style.items]},_vm._l((_vm.filtered),function(option){return _c('li',{key:option.value || option.header,class:{
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"52c9b316-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AdvancedSelect.vue?vue&type=template&id=58a8b828&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"btn-group",class:{ dropup: _vm.dropup }},[_c('button',{staticClass:"btn btn-default dropdown-toggle",attrs:{"type":"button","data-toggle":"dropdown","aria-haspopup":"true","aria-expanded":"false"}},[(_vm.values.length)?_c('span',[_vm._v(_vm._s(_vm.valuesText))]):_c('span',{class:_vm.$style.placeholder},[_vm._v(_vm._s(_vm.texts.placeholder))]),_vm._v("\n     "),_c('span',{staticClass:"caret"})]),_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu']},[(_vm.controls && _vm.multiple)?_c('li',{class:_vm.$style.controls},[_c('div',{staticClass:"btn-group btn-group-justified",attrs:{"role":"group","aria-label":"global actions"}},[_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectAll($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectAll)+"\n          ")])]),_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectNone($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectNone)+"\n          ")])])])]):_vm._e(),(_vm.search)?_c('li',{class:_vm.$style.search},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.filter),expression:"filter"}],staticClass:"form-control",attrs:{"placeholder":"Search"},domProps:{"value":(_vm.filter)},on:{"input":function($event){if($event.target.composing){ return; }_vm.filter=$event.target.value}}})]):_vm._e(),(_vm.emptyResults)?_c('li',{class:_vm.$style.empty},[_c('span',{staticClass:"text-muted"},[_vm._v("\n        "+_vm._s(_vm.texts.empty)+"\n      ")])]):_c('li',[_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu', _vm.$style.items]},_vm._l((_vm.filtered),function(option){return _c('li',{key:option.value || option.header,class:{
             'dropdown-header': option.header,
             active: !_vm.multiple && !!_vm.selected[option.value],
             disabled: option.disabled,
@@ -1599,7 +1599,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/AdvancedSelect.vue?vue&type=template&id=73287b4b&
+// CONCATENATED MODULE: ./src/components/AdvancedSelect.vue?vue&type=template&id=58a8b828&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.constructor.js
 var es6_regexp_constructor = __webpack_require__("3b2b");
@@ -1813,7 +1813,8 @@ var es6_number_constructor = __webpack_require__("c5f6");
   data: function data() {
     return {
       myValue: this.value,
-      filter: ''
+      filter: '',
+      dropup: false
     };
   },
   computed: {
@@ -1893,10 +1894,31 @@ var es6_number_constructor = __webpack_require__("c5f6");
   watch: {
     myValue: function myValue(newVal) {
       // emit the change event with the new value
-      this.$emit('change', newVal);
+      this.$emit('input', newVal);
     }
   },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    this.computeDropup();
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
+          _this3.computeDropup();
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  },
   methods: {
+    computeDropup: function computeDropup() {
+      var rect = this.$el.getBoundingClientRect();
+      var bodyH = window.innerHeight;
+      this.dropup = rect.top > bodyH / 2;
+    },
     getOptionsMap: function getOptionsMap(options) {
       var map = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       return options.reduce(function (m, o) {
@@ -1914,7 +1936,7 @@ var es6_number_constructor = __webpack_require__("c5f6");
       return this.filterRegExp.test(text);
     },
     select: function select(e, val) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.optionsMap[val].disabled) {
         e.preventDefault();
@@ -1929,7 +1951,7 @@ var es6_number_constructor = __webpack_require__("c5f6");
         e.stopPropagation(); // update the new selected items
 
         newVal = Object.keys(this.selected).map(function (k) {
-          return _this3.selected[k].value;
+          return _this4.selected[k].value;
         });
 
         if (this.selected[val]) {
