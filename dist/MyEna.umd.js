@@ -1590,8 +1590,8 @@ var web_dom_iterable = __webpack_require__("ac6a");
 var external_vue_ = __webpack_require__("8bbf");
 var external_vue_default = /*#__PURE__*/__webpack_require__.n(external_vue_);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"52c9b316-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AdvancedSelect.vue?vue&type=template&id=58a8b828&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"btn-group",class:{ dropup: _vm.dropup }},[_c('button',{staticClass:"btn btn-default dropdown-toggle",attrs:{"type":"button","data-toggle":"dropdown","aria-haspopup":"true","aria-expanded":"false"}},[(_vm.values.length)?_c('span',[_vm._v(_vm._s(_vm.valuesText))]):_c('span',{class:_vm.$style.placeholder},[_vm._v(_vm._s(_vm.texts.placeholder))]),_vm._v("\n     "),_c('span',{staticClass:"caret"})]),_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu']},[(_vm.controls && _vm.multiple)?_c('li',{class:_vm.$style.controls},[_c('div',{staticClass:"btn-group btn-group-justified",attrs:{"role":"group","aria-label":"global actions"}},[_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectAll($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectAll)+"\n          ")])]),_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectNone($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectNone)+"\n          ")])])])]):_vm._e(),(_vm.search)?_c('li',{class:_vm.$style.search},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.filter),expression:"filter"}],staticClass:"form-control",attrs:{"placeholder":"Search"},domProps:{"value":(_vm.filter)},on:{"input":function($event){if($event.target.composing){ return; }_vm.filter=$event.target.value}}})]):_vm._e(),(_vm.emptyResults)?_c('li',{class:_vm.$style.empty},[_c('span',{staticClass:"text-muted"},[_vm._v("\n        "+_vm._s(_vm.texts.empty)+"\n      ")])]):_c('li',[_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu', _vm.$style.items]},_vm._l((_vm.filtered),function(option){return _c('li',{key:option.value || option.header,class:{
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"52c9b316-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AdvancedSelect.vue?vue&type=template&id=c4fba05c&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"btn-group",class:{ dropup: _vm.dropup }},[_c('button',{staticClass:"btn btn-default dropdown-toggle",attrs:{"type":"button","data-toggle":"dropdown","aria-haspopup":"true","aria-expanded":"false","disabled":_vm.disabled}},[(_vm.values.length)?_c('span',[_vm._v(_vm._s(_vm.valuesText))]):_c('span',{class:_vm.$style.placeholder},[_vm._v(_vm._s(_vm.texts.placeholder))]),_vm._v("\n     "),_c('span',{staticClass:"caret"})]),_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu']},[(_vm.controls && _vm.multiple)?_c('li',{class:_vm.$style.controls},[_c('div',{staticClass:"btn-group btn-group-justified",attrs:{"role":"group","aria-label":"global actions"}},[_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectAll($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectAll)+"\n          ")])]),_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectNone($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectNone)+"\n          ")])])])]):_vm._e(),(_vm.search)?_c('li',{class:_vm.$style.search},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.filter),expression:"filter"}],staticClass:"form-control",attrs:{"placeholder":"Search"},domProps:{"value":(_vm.filter)},on:{"input":function($event){if($event.target.composing){ return; }_vm.filter=$event.target.value}}})]):_vm._e(),(_vm.emptyResults)?_c('li',{class:_vm.$style.empty},[_c('span',{staticClass:"text-muted"},[_vm._v("\n        "+_vm._s(_vm.texts.empty)+"\n      ")])]):_c('li',[_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu', _vm.$style.items]},_vm._l((_vm.filtered),function(option){return _c('li',{key:option.value || option.header,class:{
             'dropdown-header': option.header,
             active: !_vm.multiple && !!_vm.selected[option.value],
             disabled: option.disabled,
@@ -1599,7 +1599,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/AdvancedSelect.vue?vue&type=template&id=58a8b828&
+// CONCATENATED MODULE: ./src/components/AdvancedSelect.vue?vue&type=template&id=c4fba05c&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.constructor.js
 var es6_regexp_constructor = __webpack_require__("3b2b");
@@ -1767,6 +1767,7 @@ var es6_number_constructor = __webpack_require__("c5f6");
 //
 //
 //
+//
 /* harmony default export */ var AdvancedSelectvue_type_script_lang_js_ = ({
   props: {
     value: {
@@ -1781,7 +1782,7 @@ var es6_number_constructor = __webpack_require__("c5f6");
       type: Boolean
     },
     controls: {
-      default: true,
+      default: false,
       type: Boolean
     },
     displayMax: {
@@ -1791,6 +1792,10 @@ var es6_number_constructor = __webpack_require__("c5f6");
     displayText: {
       default: '{0} items selected',
       type: String
+    },
+    disabled: {
+      default: false,
+      type: Boolean
     },
     options: {
       default: function _default() {
@@ -1938,8 +1943,9 @@ var es6_number_constructor = __webpack_require__("c5f6");
     select: function select(e, val) {
       var _this4 = this;
 
+      e.preventDefault();
+
       if (this.optionsMap[val].disabled) {
-        e.preventDefault();
         e.stopPropagation();
         return;
       }
@@ -1947,7 +1953,6 @@ var es6_number_constructor = __webpack_require__("c5f6");
       var newVal; // for multiple, don't close the menu
 
       if (this.multiple) {
-        e.preventDefault();
         e.stopPropagation(); // update the new selected items
 
         newVal = Object.keys(this.selected).map(function (k) {
