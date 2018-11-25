@@ -1,14 +1,13 @@
 <template>
   <div id="app" class="container-fluid">
-    <div class="top"></div>
     <advanced-select
       v-model="value"
       :options="options"
       :search="search"
       :multiple="multiple"
       :displayMax="displayMax"
+      :disabled="disabled"
       />
-    <div class="bottom"></div>
   </div>
 </template>
 
@@ -46,6 +45,7 @@ export default {
     value: [1],
     multiple: true,
     search: true,
+    disabled: true,
     displayMax: 3,
   }),
   watch: {

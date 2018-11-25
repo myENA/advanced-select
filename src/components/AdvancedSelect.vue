@@ -1,7 +1,8 @@
 <template>
   <div class="btn-group" :class="{ dropup }">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false">
+      aria-haspopup="true" aria-expanded="false"
+      :disabled="disabled">
       <span v-if="values.length">{{valuesText}}</span>
       <span v-else :class="$style.placeholder">{{texts.placeholder}}</span>
       &nbsp;<span class="caret"></span>
@@ -119,6 +120,10 @@ export default {
     displayText: {
       default: '{0} items selected',
       type: String,
+    },
+    disabled: {
+      default: false,
+      type: Boolean,
     },
     options: {
       default: () => ([]),
