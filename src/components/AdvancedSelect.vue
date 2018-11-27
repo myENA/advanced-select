@@ -2,7 +2,7 @@
   <div class="btn-group" :class="{ dropup }">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false"
-      :disabled="disabled">
+      v-bind="$attrs">
       <span v-if="values.length">{{valuesText}}</span>
       <span v-else :class="$style.placeholder">{{texts.placeholder}}</span>
       &nbsp;<span class="caret"></span>
@@ -96,7 +96,27 @@
 </style>
 
 <script type="text/javascript">
+
+function getOptionsFromVNodes(vnodes) {
+  return vnodes.reduce((opts, vnode) => {
+    if (vnode.tag === 'option') {
+      // node is an option
+      opts.push(Object.assign({
+        text: vnode.children[0].text,
+      }, vnode.data.attrs));
+    } else if (vnode.tag === 'optgroup') {
+      opts.push(Object.assign({
+        options: getOptionsFromVNodes(vnode.children),
+      }, vnode.data.attrs));
+    } else {
+      // ignore all the rest
+    }
+    return opts;
+  }, []);
+}
+
 export default {
+  inheritAttrs: false,
   props: {
     value: {
       default: null,
@@ -121,12 +141,13 @@ export default {
       default: '{0} items selected',
       type: String,
     },
-    disabled: {
-      default: false,
-      type: Boolean,
-    },
     options: {
-      default: () => ([]),
+      default() {
+        if (this.$slots.default) {
+          return getOptionsFromVNodes(this.$slots.default);
+        }
+        return [];
+      },
       type: Array,
     },
     texts: {
