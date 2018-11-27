@@ -213,6 +213,9 @@ export default {
       // emit the change event with the new value
       this.$emit('input', newVal);
     },
+    value(value) {
+      this.myValue = value;
+    },
   },
   mounted() {
     this.computeDropup();
