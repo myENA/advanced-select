@@ -161,7 +161,7 @@ export default {
     },
     selected() {
       let selected = {};
-      if (this.myValue) {
+      if (this.myValue != null) {
         let { myValue } = this;
         if (!this.multiple) {
           myValue = [this.myValue];
