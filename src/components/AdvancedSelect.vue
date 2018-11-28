@@ -103,11 +103,11 @@ function getOptionsFromVNodes(vnodes) {
       // node is an option
       opts.push(Object.assign({
         text: vnode.children[0].text,
-      }, vnode.data.attrs));
+      }, vnode.data.attrs, vnode.data.domProps));
     } else if (vnode.tag === 'optgroup') {
       opts.push(Object.assign({
         options: getOptionsFromVNodes(vnode.children),
-      }, vnode.data.attrs));
+      }, vnode.data.attrs, vnode.data.domProps));
     } else {
       // ignore all the rest
     }
