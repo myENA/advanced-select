@@ -25,7 +25,7 @@
         </div>
       </li>
       <li v-if="search" :class="$style.search">
-        <input class="form-control" v-model="filter" placeholder="Search" />
+        <input class="form-control" v-model="filter" placeholder="Search" autofocus="autofocus" />
       </li>
       <li v-if="emptyResults" :class="$style.empty">
         <span class="text-muted">
@@ -75,6 +75,13 @@
 }
 .search, .controls {
   padding: 3px 10px;
+}
+.search {
+  :global {
+    input.form-control {
+      width: 100%;
+    }
+  }
 }
 .empty {
   padding: 3px 20px;
