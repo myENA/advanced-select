@@ -1,5 +1,5 @@
 <template>
-  <div class="btn-group" :class="{ dropup }">
+  <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true }">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false"
       v-bind="$attrs">
@@ -44,6 +44,7 @@
               {{option.header}}
             </span>
             <a v-else
+              :title="option.text"
               href="#" @click="select($event, option.value)">
               {{option.text}}
               <i v-if="multiple"
@@ -59,17 +60,45 @@
 </template>
 
 <style lang="less" module>
+.btn-group {
+  margin-bottom: 0;
+  padding: 0;
+  border: none;
+  > button {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    white-space: nowrap;
+    span[class="caret"] {
+      text-align: right;
+      float: right;
+      margin-top: 8px;
+    }
+    span:not([class="caret"]) {
+      text-align: left;
+      float: left;
+    }
+  }
+}
 .dropdown-menu {
-  min-width: 204px;
+  min-width: 300px;
+  width: 100%;
   > li {
     > a {
       position: relative;
       padding-right: 26px;
+      text-overflow: ellipsis;
+      overflow: hidden;
       > i {
         position: absolute;
         top: 6px;
         right: 6px;
       }
+    }
+    > span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: block;
     }
   }
 }
@@ -98,7 +127,12 @@
   box-shadow: none;
   width: 100%;
   max-height: 200px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: transparent;
+  > li {
+    margin-right: 2px;
+  }
 }
 </style>
 
