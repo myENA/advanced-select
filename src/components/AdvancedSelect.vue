@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true }">
+  <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true, open: isOpen }">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false"
       v-bind="$attrs">
@@ -137,6 +137,7 @@
 </style>
 
 <script type="text/javascript">
+import $ from 'jquery';
 
 function getOptionsFromVNodes(vnodes) {
   return vnodes.reduce((opts, vnode) => {
@@ -206,6 +207,7 @@ export default {
       myValue: this.value,
       filter: '',
       dropup: false,
+      isOpen: false,
     };
   },
   computed: {
@@ -291,6 +293,12 @@ export default {
         });
         ticking = true;
       }
+    });
+    $(this.$el).on('hidden.bs.dropdown', () => {
+      this.isOpen = false;
+    });
+    $(this.$el).on('shown.bs.dropdown', () => {
+      this.isOpen = true;
     });
   },
   methods: {
