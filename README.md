@@ -22,6 +22,6 @@ npm install @myena/advanced-select
 - Vue 2
 - Bootstrap 3
 
-## Usage:
+## Demo & Usage:
 
-See App.vue
+https://vueadvancedselect.firebaseapp.com/

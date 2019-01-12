@@ -10,7 +10,7 @@ module.exports = {
     },
   },
   lintOnSave: false,
-  configureWebpack: (/*config*/) => {
+  configureWebpack: () => {
     const customConfig = {
       plugins: [
         new webpack.ProvidePlugin({
@@ -26,8 +26,8 @@ module.exports = {
         }),
       ],
     };
-    // config for production
-    if (process.env.NODE_ENV === 'production') {
+    // config for lib
+    if (process.env.VUE_CLI_BUILD_TARGET === 'lib') {
       // set external modules so they won't get bundled with the lib
       customConfig.externals = [
         'bootbox',
