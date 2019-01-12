@@ -16,6 +16,7 @@
     "build": "node build.js",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
+    "test:unit-watch": "vue-cli-service test:unit --watch",
     "preversion": "npm run test:unit && npm run build && git add -A dist",
     "postversion": "git push && git push --tags && echo Run: \"npm publish\""
   },

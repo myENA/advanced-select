@@ -230,8 +230,32 @@ describe('AdvancedSelect.vue', () => {
       const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
       links.at(0).trigger('click');
       expect(wrapper.emitted().input).to.exist;
-      expect(wrapper.emitted().input[0][0].length).to.equal(3);
       expect(wrapper.emitted().input[0][0]).to.deep.equal([1, 2, 3]);
+      expect(wrapper.emitted().input[0][0].length).to.equal(3);
+    });
+    it('Disabled values are not set on "Select all"', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [
+            { text: '1', value: 1 },
+            { text: '2', value: 2 },
+            {
+              label: 'Group',
+              options: [
+                { text: '3', value: 3 },
+                { text: '4', value: 4, disabled: true },
+              ],
+            },
+          ],
+          multiple: true,
+          controls: true,
+        },
+      });
+      const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
+      links.at(0).trigger('click');
+      expect(wrapper.emitted().input).to.exist;
+      expect(wrapper.emitted().input[0][0]).to.deep.equal([1, 2, 3]);
+      expect(wrapper.emitted().input[0][0].length).to.equal(3);
     });
     it('No values are set on "Select none"', () => {
       const wrapper = shallowMount(Select, {

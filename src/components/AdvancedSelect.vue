@@ -221,7 +221,9 @@ export default {
       return this.values.join(', ');
     },
     optionsMap() {
-      return this.getOptionsMap(this.filtered);
+      // For the optionsMap, use all options, not just the filtered ones
+      // so that selecting values searches entire list
+      return this.getOptionsMap(this.linearOptions);
     },
     selected() {
       let selected = {};
@@ -241,24 +243,24 @@ export default {
       }
       return selected;
     },
+    /**
+     * Create a list of the filtered options; i.e. those that match the search
+     */
     filtered() {
+      return this.linearOptions.filter(this.optionMatch);
+    },
+    /**
+     * Create a linear list of all the options (headers included)
+     */
+    linearOptions() {
       return this.options.reduce((f, o) => {
         if (o.options) {
-          // filter this group
-          const group = o.options.filter(this.optionMatch);
-          if (this.textMatch(o.label) || group.length) {
-            // push the header
-            f.push({
-              header: o.label,
-            });
-            // push the rest of the items
-            if (group.length) {
-              f.push(...group);
-            } else {
-              f.push(...o.options);
-            }
-          }
-        } else if (this.optionMatch(o)) {
+          // push the header
+          f.push({
+            header: o.label,
+          });
+          f.push(...o.options);
+        } else {
           // it's an item without group, push it to the list
           f.push(o);
         }
@@ -316,7 +318,7 @@ export default {
       }, map);
     },
     optionMatch(o) {
-      return this.textMatch(o.text);
+      return this.textMatch(o.text || o.header);
     },
     textMatch(text) {
       return this.filterRegExp.test(text);
@@ -347,7 +349,12 @@ export default {
       this.myValue = newVal;
     },
     selectAll() {
-      this.myValue = this.filtered.filter(o => !o.header && !o.disabled).map(o => o.value);
+      // when selecting all, concatenate the exiting selected values
+      // with the currently filtered ones
+      this.myValue = [].concat(
+        this.myValue || [],
+        this.filtered.filter(o => !o.header && !o.disabled).map(o => o.value)
+      );
     },
     selectNone() {
       this.myValue = [];
