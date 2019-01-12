@@ -138,6 +138,12 @@
 
 <script type="text/javascript">
 import $ from 'jquery';
+import inView from 'in-view';
+
+inView.offset({
+  top: 0,
+  bottom: 300,
+});
 
 function getOptionsFromVNodes(vnodes) {
   return vnodes.reduce((opts, vnode) => {
@@ -305,9 +311,7 @@ export default {
   },
   methods: {
     computeDropup() {
-      const rect = this.$el.getBoundingClientRect();
-      const bodyH = window.innerHeight;
-      this.dropup = rect.top > bodyH / 2;
+      this.dropup = !inView.is(this.$el);
     },
     getOptionsMap(options, map = {}) {
       return options.reduce((m, o) => {
