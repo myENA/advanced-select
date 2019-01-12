@@ -79,27 +79,30 @@
       float: left;
     }
   }
-}
-.dropdown-menu {
-  min-width: 300px;
-  width: 100%;
-  > li {
-    > a {
-      position: relative;
-      padding-right: 26px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      > i {
-        position: absolute;
-        top: 6px;
-        right: 6px;
+  .dropdown-menu {
+    min-width: 300px;
+    width: 100%;
+    > li {
+      > a {
+        position: relative;
+        padding-right: 26px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        > i {
+          position: absolute;
+          top: 6px;
+          right: 6px;
+        }
+      }
+      > span {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: block;
       }
     }
-    > span {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: block;
-    }
+  }
+  > .dropdown-menu {
+    min-width: 302px;
   }
 }
 .search, .controls {
