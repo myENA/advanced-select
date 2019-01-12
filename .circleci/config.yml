@@ -61,6 +61,8 @@ jobs:
           paths:
             - example
             - node_modules
+            - .firebaserc
+            - firebase.json
 
   deploy:
     docker:
