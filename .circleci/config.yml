@@ -81,10 +81,10 @@ workflows:
   build-and-deploy:
     jobs:
       - install
-      - test
+      - test:
           requires:
             - install
-      - build
+      - build:
           requires:
             - install
       - deploy:
