@@ -347,7 +347,7 @@ export default {
       this.myValue = newVal;
     },
     selectAll() {
-      this.myValue = this.filtered.filter(o => !o.header).map(o => o.value);
+      this.myValue = this.filtered.filter(o => !o.header && !o.disabled).map(o => o.value);
     },
     selectNone() {
       this.myValue = [];
