@@ -4,15 +4,9 @@
 #
 version: 2
 jobs:
-  build:
+  install:
     docker:
-      # specify the version you desire here
       - image: circleci/node:10.13.0
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
 
@@ -33,24 +27,50 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
-      - run: npm run test:unit
-      # build example
-      - run: npm run build:example
-
       - save_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/repo
-  deploy:
+  test:
     docker:
-      # specify the version you desire here
       - image: circleci/node:10.13.0
+
     working_directory: ~/repo
 
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      # run tests!
+      - run: npm run test:unit
+
+  build:
+    docker:
+      - image: circleci/node:10.13.0
+
+    working_directory: ~/repo
+
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+
+      # build example
+      - run: npm run build:example
+
+      - save_cache:
+          key: v1-build-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - example
+            - node_modules
+
+  deploy:
+    docker:
+      - image: circleci/node:10.13.0
+
+    working_directory: ~/repo
+
+    steps:
+      - restore_cache:
+          key: v1-build-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Deploy Master to Firebase
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
@@ -58,11 +78,18 @@ jobs:
 workflows:
   version: 2
 
-  -build-and-deploy:
+  build-and-deploy:
     jobs:
+      - install
+      - test
+          requires:
+            - install
       - build
+          requires:
+            - install
       - deploy:
           requires:
+            - test
             - build
           filters:
             branches:
