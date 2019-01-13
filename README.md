@@ -3,6 +3,7 @@
 
 [![CircleCI (all branches)](https://img.shields.io/circleci/project/github/myENA/advanced-select.svg)](https://circleci.com/gh/myENA/advanced-select)
 [![npm (scoped)](https://img.shields.io/npm/v/@myena/advanced-select.svg)](https://www.npmjs.com/package/@myena/advanced-select)
+![](https://img.shields.io/npm/dt/@myena/advanced-select.svg)
 [![NpmLicense](https://img.shields.io/npm/l/@myena/advanced-select.svg)](https://www.npmjs.com/package/@myena/advanced-select)
 ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@myena/advanced-select.svg)
 ![David](https://img.shields.io/david/peer/myena/advanced-select.svg)
@@ -10,7 +11,7 @@
 
 
 ## What's this
-Components to render a "select" with advanced interactions (search, select/deselect all, etc)
+Component to render a "select" with advanced interactions (search, select/deselect all, etc) for websites built with Vue and Bootstrap 3
 
 ## Install
 ```
