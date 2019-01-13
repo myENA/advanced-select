@@ -14,6 +14,7 @@
             <li><a href="#basic">Basic</a></li>
             <li><a href="#multiple">Multiple</a></li>
             <li><a href="#search">Search</a></li>
+            <li><a href="#modal">In a modal</a></li>
           </ul>
           <a class="back-to-top" href="#top">Back to top</a>
         </nav>
@@ -42,6 +43,7 @@ export default {
         <Basic id="basic" />
         <Multiple id="multiple" />
         <Search id="search" />
+        <Modal id="modal" />
       </div>
     </div>
     </div>
@@ -54,12 +56,14 @@ import 'bootstrap/less/bootstrap.less';
 import Basic from './examples/Basic.vue';
 import Multiple from './examples/Multiple.vue';
 import Search from './examples/Search.vue';
+import Modal from './examples/Modal.vue';
 
 export default {
   components: {
     Basic,
     Multiple,
     Search,
+    Modal,
   },
 };
 </script>

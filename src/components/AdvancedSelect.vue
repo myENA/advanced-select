@@ -2,7 +2,8 @@
   <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true, open: isOpen }">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false"
-      v-bind="$attrs">
+      v-bind="$attrs"
+      @click="computeDropup">
       <span v-if="values.length">{{valuesText}}</span>
       <span v-else :class="$style.placeholder">{{texts.placeholder}}</span>
       &nbsp;<span class="caret"></span>
