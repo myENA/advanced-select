@@ -78,6 +78,7 @@ Prop | Type | Default | Description
 `:search` | Boolean | `false` | Show or not a search field to filter the options
 `:multiple` | Boolean | `false` | Single or multiple select
 `:controls` | Boolean | `false` | Show or not a couple control buttons at the top for (de)selecting all items
+`:collapseHeaders` | Boolean | `false` | Show or not a link on the headers to toggle items under them
 `:displayMax` | Number | `0` | How many selected items to display on the button in multiple mode. 0 means all
 `:displayText` | String | `"{0} items selected"` | Text to display if `displayMax` is reached. "{0}" will be replaced by the total number
 `:texts` | Object | `{ placeholder: 'Nothing selected', empty: 'No results', selectAll: 'Select all', selectNone: 'Select none', }` | Texts used

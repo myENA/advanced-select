@@ -1563,17 +1563,21 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"77dff026-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AdvancedSelect.vue?vue&type=template&id=24b2227e&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:( _obj = { dropup: _vm.dropup, 'btn-group': true, open: _vm.isOpen }, _obj[_vm.$style['btn-group']] = true, _obj )},[_c('button',_vm._b({staticClass:"btn btn-default dropdown-toggle",attrs:{"type":"button","data-toggle":"dropdown","aria-haspopup":"true","aria-expanded":"false"},on:{"click":_vm.computeDropup}},'button',_vm.$attrs,false),[(_vm.values.length)?_c('span',[_vm._v(_vm._s(_vm.valuesText))]):_c('span',{class:_vm.$style.placeholder},[_vm._v(_vm._s(_vm.texts.placeholder))]),_vm._v("\n     "),_c('span',{staticClass:"caret"})]),_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu']},[(_vm.controls && _vm.multiple)?_c('li',{class:_vm.$style.controls},[_c('div',{staticClass:"btn-group btn-group-justified",attrs:{"role":"group","aria-label":"global actions"}},[_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectAll($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectAll)+"\n          ")])]),_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectNone($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectNone)+"\n          ")])])])]):_vm._e(),(_vm.search)?_c('li',{class:_vm.$style.search},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.filter),expression:"filter"}],staticClass:"form-control",attrs:{"placeholder":"Search","autofocus":"autofocus"},domProps:{"value":(_vm.filter)},on:{"input":function($event){if($event.target.composing){ return; }_vm.filter=$event.target.value}}})]):_vm._e(),(_vm.emptyResults)?_c('li',{class:_vm.$style.empty},[_c('span',{staticClass:"text-muted"},[_vm._v("\n        "+_vm._s(_vm.texts.empty)+"\n      ")])]):_c('li',[_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu', _vm.$style.items]},_vm._l((_vm.filtered),function(option){return _c('li',{key:option.value || option.header,class:{
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"59c960cf-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AdvancedSelect.vue?vue&type=template&id=84bd55cc&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:( _obj = { dropup: _vm.dropup, 'btn-group': true, open: _vm.isOpen }, _obj[_vm.$style['btn-group']] = true, _obj )},[_c('button',_vm._b({staticClass:"btn btn-default dropdown-toggle",attrs:{"type":"button","data-toggle":"dropdown","aria-haspopup":"true","aria-expanded":"false"},on:{"click":_vm.computeDropup}},'button',_vm.$attrs,false),[(_vm.values.length)?_c('span',[_vm._v(_vm._s(_vm.valuesText))]):_c('span',{class:_vm.$style.placeholder},[_vm._v(_vm._s(_vm.texts.placeholder))]),_vm._v("\n     "),_c('span',{staticClass:"caret"})]),_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu']},[(_vm.controls && _vm.multiple)?_c('li',{class:_vm.$style.controls},[_c('div',{staticClass:"btn-group btn-group-justified",attrs:{"role":"group","aria-label":"global actions"}},[_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectAll($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectAll)+"\n          ")])]),_c('div',{staticClass:"btn-group",attrs:{"role":"group"}},[_c('button',{staticClass:"btn btn-default",attrs:{"type":"button"},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.selectNone($event)}}},[_vm._v("\n            "+_vm._s(_vm.texts.selectNone)+"\n          ")])])])]):_vm._e(),(_vm.search)?_c('li',{class:_vm.$style.search},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.filter),expression:"filter"}],staticClass:"form-control",attrs:{"placeholder":"Search","autofocus":"autofocus"},domProps:{"value":(_vm.filter)},on:{"input":function($event){if($event.target.composing){ return; }_vm.filter=$event.target.value}}})]):_vm._e(),(_vm.emptyResults)?_c('li',{class:_vm.$style.empty},[_c('span',{staticClass:"text-muted"},[_vm._v("\n        "+_vm._s(_vm.texts.empty)+"\n      ")])]):_c('li',[_c('ul',{class:[_vm.$style['dropdown-menu'], 'dropdown-menu', _vm.$style.items]},_vm._l((_vm.filtered),function(option){return (!option.parentHeader || !_vm.collapsed[option.parentHeader])?_c('li',{key:option.value || option.header,class:{
             'dropdown-header': option.header,
             active: !_vm.multiple && !!_vm.selected[option.value],
             disabled: option.disabled,
-          }},[(option.header)?_c('span',[_vm._v("\n            "+_vm._s(option.header)+"\n          ")]):_c('a',{attrs:{"title":option.text,"href":"#"},on:{"click":function($event){_vm.select($event, option.value)}}},[_vm._v("\n            "+_vm._s(option.text)+"\n            "),(_vm.multiple)?_c('i',{staticClass:"glyphicon",class:{ 'glyphicon-ok': !!_vm.selected[option.value] }}):_vm._e()])])}))])])])
+            'has-header': !!option.parentHeader,
+          }},[(option.header)?_c('span',{on:{"click":function($event){$event.preventDefault();$event.stopPropagation();return _vm.stopClick($event)}}},[_vm._v("\n            "+_vm._s(option.header)+"\n            "),_c('a',{attrs:{"title":"Toggle","href":"#"},on:{"click":function($event){$event.preventDefault();$event.stopPropagation();_vm.toggle($event, option.header)}}},[(_vm.collapseHeaders)?_c('i',{staticClass:"glyphicon",class:{
+                  'glyphicon-chevron-down': !_vm.collapsed[option.header],
+                  'glyphicon-chevron-right': _vm.collapsed[option.header],
+                }}):_vm._e()])]):_c('a',{attrs:{"title":option.text,"href":"#"},on:{"click":function($event){_vm.select($event, option.value)}}},[_vm._v("\n            "+_vm._s(option.text)+"\n            "),(_vm.multiple)?_c('i',{staticClass:"glyphicon",class:{ 'glyphicon-ok': !!_vm.selected[option.value] }}):_vm._e()])]):_vm._e()}))])])])
 var _obj;}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/AdvancedSelect.vue?vue&type=template&id=24b2227e&
+// CONCATENATED MODULE: ./src/components/AdvancedSelect.vue?vue&type=template&id=84bd55cc&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.object.keys.js
 var es6_object_keys = __webpack_require__("456d");
@@ -1804,6 +1808,26 @@ var in_view_min_default = /*#__PURE__*/__webpack_require__.n(in_view_min);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 in_view_min_default.a.offset({
@@ -1847,6 +1871,10 @@ function getOptionsFromVNodes(vnodes) {
       default: false,
       type: Boolean
     },
+    collapseHeaders: {
+      default: false,
+      type: Boolean
+    },
     displayMax: {
       default: 0,
       type: Number
@@ -1882,7 +1910,8 @@ function getOptionsFromVNodes(vnodes) {
       myValue: this.value,
       filter: '',
       dropup: false,
-      isOpen: false
+      isOpen: false,
+      collapsed: {}
     };
   },
   computed: {
@@ -1944,7 +1973,11 @@ function getOptionsFromVNodes(vnodes) {
           f.push({
             header: o.label
           });
-          f.push.apply(f, _toConsumableArray(o.options));
+          f.push.apply(f, _toConsumableArray(o.options.map(function (opt) {
+            return Object.assign(opt, {
+              parentHeader: o.label
+            });
+          })));
         } else {
           // it's an item without group, push it to the list
           f.push(o);
@@ -1967,17 +2000,33 @@ function getOptionsFromVNodes(vnodes) {
     },
     value: function value(_value) {
       this.myValue = _value;
+    },
+    options: {
+      immediate: true,
+      handler: function handler() {
+        var _this2 = this;
+
+        this.collapsed = this.options.reduce(function (f, o) {
+          if (o.options) {
+            // has header, set it as collapsed by default, if collapse is enabled
+            f[o.label] = _this2.collapseHeaders;
+          }
+
+          return f;
+        }, {});
+        console.log(this.options, this.collapsed);
+      }
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
     this.computeDropup();
     var ticking = false;
     window.addEventListener('scroll', function () {
       if (!ticking) {
         window.requestAnimationFrame(function () {
-          _this2.computeDropup();
+          _this3.computeDropup();
 
           ticking = false;
         });
@@ -1985,10 +2034,10 @@ function getOptionsFromVNodes(vnodes) {
       }
     });
     external_jquery_default()(this.$el).on('hidden.bs.dropdown', function () {
-      _this2.isOpen = false;
+      _this3.isOpen = false;
     });
     external_jquery_default()(this.$el).on('shown.bs.dropdown', function () {
-      _this2.isOpen = true;
+      _this3.isOpen = true;
     });
   },
   methods: {
@@ -2012,7 +2061,7 @@ function getOptionsFromVNodes(vnodes) {
       return this.filterRegExp.test(text);
     },
     select: function select(e, val) {
-      var _this3 = this;
+      var _this4 = this;
 
       e.preventDefault();
 
@@ -2027,7 +2076,7 @@ function getOptionsFromVNodes(vnodes) {
         e.stopPropagation(); // update the new selected items
 
         newVal = Object.keys(this.selected).map(function (k) {
-          return _this3.selected[k].value;
+          return _this4.selected[k].value;
         });
 
         if (this.selected[val]) {
@@ -2057,7 +2106,11 @@ function getOptionsFromVNodes(vnodes) {
     },
     selectNone: function selectNone() {
       this.myValue = [];
-    }
+    },
+    toggle: function toggle(event, label) {
+      this.collapsed[label] = !this.collapsed[label];
+    },
+    stopClick: function stopClick() {}
   }
 });
 // CONCATENATED MODULE: ./src/components/AdvancedSelect.vue?vue&type=script&lang=js&

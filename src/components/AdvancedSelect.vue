@@ -36,13 +36,28 @@
       <li v-else>
         <ul :class="[$style['dropdown-menu'], 'dropdown-menu', $style.items]">
           <li v-for="option in filtered" :key="option.value || option.header"
+            v-if="!option.parentHeader || !collapsed[option.parentHeader]"
             :class="{
               'dropdown-header': option.header,
               active: !multiple && !!selected[option.value],
               disabled: option.disabled,
+              'has-header': !!option.parentHeader,
             }">
-            <span v-if="option.header">
+            <span
+              v-if="option.header"
+              @click.prevent.stop="stopClick"
+              >
               {{option.header}}
+              <a title="Toggle"
+                href="#" @click.prevent.stop="toggle($event, option.header)">
+                <i v-if="collapseHeaders"
+                  class="glyphicon"
+                  :class="{
+                    'glyphicon-chevron-down': !collapsed[option.header],
+                    'glyphicon-chevron-right': collapsed[option.header],
+                  }">
+                </i>
+              </a>
             </span>
             <a v-else
               :title="option.text"
@@ -99,6 +114,11 @@
         text-overflow: ellipsis;
         overflow: hidden;
         display: block;
+        position: relative;
+        > a {
+          position: absolute;
+          right: 0;
+        }
       }
     }
   }
@@ -185,6 +205,10 @@ export default {
       default: false,
       type: Boolean,
     },
+    collapseHeaders: {
+      default: false,
+      type: Boolean,
+    },
     displayMax: {
       default: 0,
       type: Number,
@@ -218,6 +242,7 @@ export default {
       filter: '',
       dropup: false,
       isOpen: false,
+      collapsed: {},
     };
   },
   computed: {
@@ -269,7 +294,7 @@ export default {
           f.push({
             header: o.label,
           });
-          f.push(...o.options);
+          f.push(...o.options.map(opt => Object.assign(opt, { parentHeader: o.label })));
         } else {
           // it's an item without group, push it to the list
           f.push(o);
@@ -291,6 +316,19 @@ export default {
     },
     value(value) {
       this.myValue = value;
+    },
+    options: {
+      immediate: true,
+      handler() {
+        this.collapsed = this.options.reduce((f, o) => {
+          if (o.options) {
+            // has header, set it as collapsed by default, if collapse is enabled
+            f[o.label] = this.collapseHeaders;
+          }
+          return f;
+        }, {});
+        console.log(this.options, this.collapsed);
+      },
     },
   },
   mounted() {
@@ -367,6 +405,10 @@ export default {
     selectNone() {
       this.myValue = [];
     },
+    toggle(event, label) {
+      this.collapsed[label] = !this.collapsed[label];
+    },
+    stopClick() {},
   },
 };
 </script>
