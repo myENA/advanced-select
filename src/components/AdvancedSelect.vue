@@ -327,7 +327,6 @@ export default {
           }
           return f;
         }, {});
-        console.log(this.options, this.collapsed);
       },
     },
   },
