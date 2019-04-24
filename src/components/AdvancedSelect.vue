@@ -86,13 +86,19 @@
     z-index: 1;
     white-space: nowrap;
     span[class="caret"] {
-      text-align: right;
-      float: right;
-      margin-top: 8px;
+      display: block;
+      position: absolute;
+      right: 10px;
+      top: 15px;
     }
     span:not([class="caret"]) {
       text-align: left;
-      float: left;
+      display: block;
+      position: absolute;
+      right: 20px;
+      left: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   .dropdown-menu {
