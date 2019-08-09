@@ -29,7 +29,10 @@
         <input class="form-control" v-model="filter" placeholder="Search" autofocus="autofocus" />
       </li>
       <li v-if="emptyResults" :class="$style.empty">
-        <span class="text-muted">
+        <span v-if="search && remote" class="text-muted">
+          {{texts.remoteSearch}}
+        </span>
+        <span v-else class="text-muted">
           {{texts.empty}}
         </span>
       </li>
@@ -207,6 +210,10 @@ export default {
       default: false,
       type: Boolean,
     },
+    remote: {
+      default: false,
+      type: Boolean,
+    },
     controls: {
       default: false,
       type: Boolean,
@@ -238,6 +245,7 @@ export default {
         empty: 'No results',
         selectAll: 'Select all',
         selectNone: 'Select none',
+        remoteSearch: 'Type to search',
       }),
       type: Object,
     },
@@ -335,6 +343,9 @@ export default {
         }, {});
       },
     },
+    filter() {
+      this.$emit('filter', this.filter);
+    },
   },
   mounted() {
     this.computeDropup();
@@ -369,7 +380,7 @@ export default {
       }, map);
     },
     optionMatch(o) {
-      return this.textMatch(o.text || o.header);
+      return this.remote || this.textMatch(o.text || o.header);
     },
     textMatch(text) {
       return this.filterRegExp.test(text);
