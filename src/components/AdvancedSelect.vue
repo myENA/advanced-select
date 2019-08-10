@@ -83,6 +83,7 @@
   margin-bottom: 0;
   padding: 0;
   border: none;
+  min-width: 200px;
   > button {
     position: relative;
     width: 100%;

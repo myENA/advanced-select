@@ -16,6 +16,7 @@
       <label>Change your option:</label>
       <div>
         <advanced-select
+          class="form-control"
           v-model="secondValue"
           :disabled="disabled"
           >
