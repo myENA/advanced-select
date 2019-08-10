@@ -49,6 +49,28 @@ export default {
   }),
 };</pre>
     </div>
+    <h2>Multiple select, with collapsible groups</h2>
+    <div class="form-group">
+      <label>Pick an option:</label>
+      <div>
+        <advanced-select
+          v-model="value"
+          :options="options"
+          :multiple="multiple"
+          :collapse-headers="true"
+          :displayMax="2"
+          />
+      </div>
+    </div>
+    <div>
+      <pre>&lt;advanced-select
+  v-model="value"
+  :options="options"
+  :multiple="multiple"
+  :collapse-headers="true"
+  :displayMax="2"
+  /&gt;</pre>
+    </div>
   </div>
 </template>
 <script>

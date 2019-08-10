@@ -41,7 +41,6 @@
       <li v-else>
         <ul :class="[$style['dropdown-menu'], 'dropdown-menu', $style.items]">
           <li v-for="option in filtered" :key="option.value || option.header"
-            v-if="!option.parentHeader || !collapsed[option.parentHeader]"
             :class="{
               'dropdown-header': option.header,
               active: !multiple && !!selected[option.value],
@@ -383,7 +382,8 @@ export default {
       }, map);
     },
     optionMatch(o) {
-      return this.remote || this.textMatch(o.text || o.header);
+      return ((!o.parentHeader || !this.collapsed[o.parentHeader])) &&
+        (this.remote || this.textMatch(o.text || o.header));
     },
     textMatch(text) {
       return this.filterRegExp.test(text);
