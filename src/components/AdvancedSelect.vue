@@ -28,11 +28,13 @@
       <li v-if="search" :class="$style.search">
         <input class="form-control" v-model="filter" placeholder="Search" autofocus="autofocus" />
       </li>
-      <li v-if="emptyResults" :class="$style.empty">
-        <span v-if="search && remote" class="text-muted">
+      <li v-if="search && !filter && remote" :class="$style.empty">
+        <span class="text-muted">
           {{texts.remoteSearch}}
         </span>
-        <span v-else class="text-muted">
+      </li>
+      <li v-else-if="emptyResults" :class="$style.empty">
+        <span class="text-muted">
           {{texts.empty}}
         </span>
       </li>
@@ -246,7 +248,7 @@ export default {
         empty: 'No results',
         selectAll: 'Select all',
         selectNone: 'Select none',
-        remoteSearch: 'Type to search',
+        remoteSearch: 'Start typing to load options',
       }),
       type: Object,
     },
