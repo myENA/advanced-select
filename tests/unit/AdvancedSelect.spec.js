@@ -279,5 +279,44 @@ describe('AdvancedSelect.vue', () => {
       expect(wrapper.emitted().input).to.exist;
       expect(wrapper.emitted().input[0][0]).to.deep.equal([]);
     });
+    it('Search returns correct results', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [
+            { text: 'Option 1', value: 1 },
+            { text: 'Option 2', value: 2 },
+            {
+              label: 'Group',
+              options: [
+                { text: 'Another 3', value: 3 },
+                { text: 'Another 4', value: 4 },
+                { text: 'Another 5', value: 5 },
+              ],
+            },
+          ],
+          multiple: true,
+          search: true,
+          controls: true,
+        },
+      });
+      expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(5);
+      wrapper.setData({
+        filter: 'opt',
+      });
+      expect(wrapper.vm.filtered).to.deep.equal([
+        { text: 'Option 1', value: 1 },
+        { text: 'Option 2', value: 2 },
+      ]);
+      expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(2);
+      wrapper.setData({
+        filter: 'anot',
+      });
+      expect(wrapper.vm.filtered).to.deep.equal([
+        { parentHeader: 'Group', text: 'Another 3', value: 3 },
+        { parentHeader: 'Group', text: 'Another 4', value: 4 },
+        { parentHeader: 'Group', text: 'Another 5', value: 5 },
+      ]);
+      expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(3);
+    });
   });
 });

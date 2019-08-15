@@ -382,11 +382,13 @@ export default {
       }, map);
     },
     optionMatch(o) {
-      return ((!o.parentHeader || !this.collapsed[o.parentHeader])) &&
-        (this.remote || this.textMatch(o.text || o.header));
+      const isNotCollapsed = (!o.parentHeader || !this.collapsed[o.parentHeader]);
+      const textMatches = this.textMatch(o.text || o.header);
+
+      return isNotCollapsed && (this.remote || textMatches);
     },
     textMatch(text) {
-      return this.filterRegExp.test(text);
+      return text.match(this.filterRegExp) !== null;
     },
     select(e, val) {
       e.preventDefault();
