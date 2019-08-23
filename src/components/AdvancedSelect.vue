@@ -336,6 +336,7 @@ export default {
     options: {
       immediate: true,
       handler() {
+        this.validateOpions(this.options);
         this.collapsed = this.options.reduce((f, o) => {
           if (o.options) {
             // has header, set it as collapsed by default, if collapse is enabled
@@ -430,6 +431,18 @@ export default {
       this.collapsed[label] = !this.collapsed[label];
     },
     stopClick() {},
+    validateOpions(options, l = 0) {
+      options.forEach((o, i) => {
+        if (o.options) {
+          if (!o.label) {
+            console.warn(`No label specified for entry at position ${i}, level ${l}`);
+          }
+          this.validateOpions(o.options, l + 1);
+        } else if (!o.text) {
+          console.warn(`No text specified for entry at position ${i}, level ${l}`);
+        }
+      });
+    },
   },
 };
 </script>
