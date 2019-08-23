@@ -388,7 +388,7 @@ export default {
       return isNotCollapsed && (this.remote || textMatches);
     },
     textMatch(text) {
-      return text.match(this.filterRegExp) !== null;
+      return text ? text.match(this.filterRegExp) !== null : true;
     },
     select(e, val) {
       e.preventDefault();

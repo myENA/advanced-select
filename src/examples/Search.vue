@@ -136,6 +136,14 @@ export default {
           { value: 8, text: 'Eight' },
         ],
       },
+      {
+        label: '',
+        options: [
+          { value: 9, text: '' },
+          { value: 10, text: 'Ten' },
+          { value: 11, text: 'Eleven' },
+        ],
+      },
     ],
     remoteOptions: [],
     value: null,
