@@ -1,5 +1,22 @@
 <template>
   <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true, open: isOpen }">
+    <select
+      v-bind="$attrs"
+      v-model="myValue"
+      :multiple="multiple"
+      class="hide"
+    >
+      <template
+        v-for="option in filtered"
+      >
+        <option
+          :key="option.value"
+          v-if="option.value"
+          :value="option.value"
+          :disabled="option.disabled"
+        >{{ option.text }}</option>
+      </template>
+    </select>
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false"
       v-bind="$attrs"
@@ -40,7 +57,10 @@
       </li>
       <li v-else>
         <ul :class="[$style['dropdown-menu'], 'dropdown-menu', $style.items]">
-          <li v-for="option in filtered" :key="option.value || option.header"
+          <li
+            v-for="option in filtered"
+            :key="option.value || option.header"
+            :data-value="option.value"
             :class="{
               'dropdown-header': option.header,
               active: !multiple && !!selected[option.value],
@@ -254,7 +274,7 @@ export default {
   },
   data() {
     return {
-      myValue: this.value,
+      myValue: this.value || [],
       filter: '',
       dropup: false,
       isOpen: false,
