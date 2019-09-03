@@ -274,7 +274,7 @@ export default {
   },
   data() {
     return {
-      myValue: this.value || [],
+      myValue: this.value || (this.multiple ? [] : null),
       filter: '',
       dropup: false,
       isOpen: false,
