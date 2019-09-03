@@ -161,7 +161,7 @@ describe('AdvancedSelect.vue', () => {
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
         },
       });
-      expect(wrapper.vm.myValue).to.equal(null);
+      expect(wrapper.vm.myValue).to.deep.equal([]);
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(0).trigger('click');
       expect(wrapper.vm.myValue).to.deep.equal([1]);
