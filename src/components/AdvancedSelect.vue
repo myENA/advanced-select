@@ -25,7 +25,7 @@
       <span v-else :class="$style.placeholder">{{texts.placeholder}}</span>
       &nbsp;<span class="caret"></span>
     </button>
-    <ul :class="[$style['dropdown-menu'], 'dropdown-menu']">
+    <ul :class="[$style['dropdown-menu'], 'dropdown-menu', dropdownClass]">
       <li v-if="controls && multiple" :class="$style.controls">
         <div class="btn-group btn-group-justified" role="group" aria-label="global actions">
           <div class="btn-group" role="group">
@@ -250,6 +250,10 @@ export default {
     },
     displayText: {
       default: '{0} items selected',
+      type: String,
+    },
+    dropdownClass: {
+      default: '',
       type: String,
     },
     options: {
