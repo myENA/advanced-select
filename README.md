@@ -81,6 +81,7 @@ Prop | Type | Default | Description
 `:collapseHeaders` | Boolean | `false` | Show or not a link on the headers to toggle items under them
 `:displayMax` | Number | `0` | How many selected items to display on the button in multiple mode. 0 means all
 `:displayText` | String | `"{0} items selected"` | Text to display if `displayMax` is reached. "{0}" will be replaced by the total number
+`:dropdownClass` | String | `''` | Class to use for the dropdown menu. EG: `'dropdown-menu-right'`
 `:texts` | Object | `{ placeholder: 'Nothing selected', empty: 'No results', selectAll: 'Select all', selectNone: 'Select none', }` | Texts used
 
 All other DOM attributes are inherited by the component button. For example: `:disabled="true"` will disable the button.
