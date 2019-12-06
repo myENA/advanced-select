@@ -119,6 +119,19 @@ describe('AdvancedSelect.vue', () => {
     });
   });
   describe('actions', () => {
+    it('Default value is set', () => {
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options: [{ text: 'Empty', value: '' }, { text: '0', value: 0 }, { text: '1', value: 1 }, { text: '2', value: 2 }],
+          value: 0,
+        },
+      });
+      expect(wrapper.vm.myValue).to.equal(0);
+      wrapper.setProps({
+        value: '',
+      });
+      expect(wrapper.vm.myValue).to.equal('');
+    });
     it('Value is set on single type', () => {
       const wrapper = shallowMount(Select, {
         propsData: {

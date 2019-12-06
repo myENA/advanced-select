@@ -11,7 +11,7 @@
       >
         <option
           :key="option.value"
-          v-if="option.value"
+          v-if="!option.header"
           :value="option.value"
           :disabled="option.disabled"
         >{{ option.text }}</option>
@@ -278,7 +278,7 @@ export default {
   },
   data() {
     return {
-      myValue: this.value || (this.multiple ? [] : null),
+      myValue: this.getDefaultValue(),
       filter: '',
       dropup: false,
       isOpen: false,
@@ -466,6 +466,15 @@ export default {
           console.warn(`No text specified for entry at position ${i}, level ${l}`);
         }
       });
+    },
+    getDefaultValue() {
+      if (this.value !== null) {
+        return this.value;
+      }
+      if (this.multiple) {
+        return [];
+      }
+      return null;
     },
   },
 };
