@@ -1,5 +1,15 @@
 <template>
-  <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true, open: isOpen }">
+  <div
+    ref="el"
+    :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true, open: isOpen }">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false"
+      v-bind="$attrs"
+      @click="computeDropup">
+      <span v-if="values.length">{{valuesText}}</span>
+      <span v-else :class="$style.placeholder">{{texts.placeholder}}</span>
+      &nbsp;<span class="caret"></span>
+    </button>
     <select
       v-bind="$attrs"
       v-model="myValue"
@@ -17,14 +27,6 @@
         >{{ option.text }}</option>
       </template>
     </select>
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false"
-      v-bind="$attrs"
-      @click="computeDropup">
-      <span v-if="values.length">{{valuesText}}</span>
-      <span v-else :class="$style.placeholder">{{texts.placeholder}}</span>
-      &nbsp;<span class="caret"></span>
-    </button>
     <ul :class="[$style['dropdown-menu'], 'dropdown-menu', dropdownClass]">
       <li v-if="controls && multiple" :class="$style.controls">
         <div class="btn-group btn-group-justified" role="group" aria-label="global actions">
@@ -194,6 +196,17 @@
 <script type="text/javascript">
 import $ from 'jquery';
 import inView from 'in-view';
+import Vue from 'vue';
+import VueCompositionApi, {
+  reactive,
+  computed,
+  toRefs,
+  ref,
+  watch,
+  onMounted,
+} from '@vue/composition-api';
+
+Vue.use(VueCompositionApi);
 
 inView.offset({
   top: 0,
@@ -216,6 +229,205 @@ function getOptionsFromVNodes(vnodes) {
     }
     return opts;
   }, []);
+}
+
+const getDefaultValue = (props) => {
+  if (props.value !== null) {
+    return props.value;
+  }
+  if (props.multiple) {
+    return [];
+  }
+  return null;
+};
+
+const getOptionsMap = (options, map = {}) => options.reduce((m, o) => {
+  if (!o.header) {
+    Object.assign(m, { [o.value]: o });
+  }
+  return m;
+}, map);
+
+
+const getState = (props) => {
+  const collapsed = ref({});
+  const filter = ref('');
+  const filterRegExp = computed(() => new RegExp(`${filter.value}`, 'ig'));
+  const textMatch = text => (text ? text.match(filterRegExp.value) !== null : true);
+
+  const optionMatch = (o) => {
+    const isNotCollapsed = (!o.parentHeader || !collapsed.value[o.parentHeader]);
+    const textMatches = textMatch(o.text || o.header);
+
+    return isNotCollapsed && (props.remote || textMatches);
+  };
+
+  const state = reactive({
+    myValue: getDefaultValue(props),
+    filter,
+    dropup: false,
+    isOpen: false,
+    collapsed,
+    values: computed(() => Object.values(state.selected).map(o => o.text)),
+    valuesText: computed(() => {
+      if (props.displayMax && props.displayMax < state.values.length) {
+        return props.displayText.replace('{0}', state.values.length);
+      }
+      return state.values.join(', ');
+    }),
+    optionsMap: computed(() =>
+      // For the optionsMap, use all options, not just the filtered ones
+      // so that selecting values searches entire list
+      getOptionsMap(state.linearOptions)),
+    selected: computed(() => {
+      let selected = {};
+      if (state.myValue != null) {
+        let { myValue } = state;
+        if (!props.multiple) {
+          myValue = [state.myValue];
+        }
+        selected = myValue.reduce((s, v) => {
+          if (state.optionsMap[v]) {
+            Object.assign(s, {
+              [v]: state.optionsMap[v],
+            });
+          }
+          return s;
+        }, {});
+      }
+      return selected;
+    }),
+    /**
+     * Create a list of the filtered options; i.e. those that match the search
+     */
+    filtered: computed(() => state.linearOptions.filter(optionMatch)),
+    /**
+     * Create a linear list of all the options (headers included)
+     */
+    linearOptions: computed(() => props.options.reduce((f, o) => {
+      if (o.options) {
+        // push the header
+        f.push({
+          header: o.label,
+        });
+        f.push(...o.options.map(opt => Object.assign(opt, { parentHeader: o.label })));
+      } else {
+        // it's an item without group, push it to the list
+        f.push(o);
+      }
+      return f;
+    }, [])),
+    emptyResults: computed(() => props.search && state.filtered.length === 0 &&
+      state.filter.value),
+    filterRegExp,
+  });
+
+  return state;
+};
+
+const getMethods = (props, context, state) => {
+  const methods = {
+    computeDropup() {
+      state.dropup = !inView.is(context.refs.el);
+    },
+    select(e, val) {
+      e.preventDefault();
+      if (state.optionsMap[val].disabled) {
+        e.stopPropagation();
+        return;
+      }
+      let newVal;
+      // for multiple, don't close the menu
+      if (props.multiple) {
+        e.stopPropagation();
+        // update the new selected items
+        newVal = Object.keys(state.selected).map(k => state.selected[k].value);
+        if (state.selected[val]) {
+          // remove it
+          newVal = newVal.filter(k => k !== val);
+        } else {
+          // add it
+          newVal.push(val);
+        }
+      } else {
+        // for single mode, just set it directly
+        newVal = val;
+      }
+      state.myValue = newVal;
+    },
+    selectAll() {
+      // when selecting all, concatenate the exiting selected values
+      // with the currently filtered ones
+      state.myValue = [].concat(
+        state.myValue || [],
+        state.filtered.filter(o => !o.header && !o.disabled).map(o => o.value)
+      );
+    },
+    selectNone() {
+      state.myValue = [];
+    },
+    toggle(event, label) {
+      state.collapsed[label] = !state.collapsed[label];
+    },
+    stopClick() {},
+    validateOpions(options, l = 0) {
+      options.forEach((o, i) => {
+        if (o.options) {
+          if (!o.label) {
+            console.warn(`No label specified for entry at position ${i}, level ${l}`);
+          }
+          methods.validateOpions(o.options, l + 1);
+        } else if (!o.text) {
+          console.warn(`No text specified for entry at position ${i}, level ${l}`);
+        }
+      });
+    },
+  };
+
+  return methods;
+};
+
+const setupWatches = (props, context, state, methods) => {
+  watch(() => state.myValue, () => {
+    context.emit('input', state.myValue);
+  }, { lazy: true });
+  watch(() => props.value, () => {
+    state.myValue = props.value;
+  }, { lazy: true });
+  watch(() => state.filter, () => {
+    context.emit('filter', state.filter);
+  });
+  watch(() => props.options, () => {
+    methods.validateOpions(props.options);
+    state.collapsed = props.options.reduce((f, o) => {
+      if (o.options) {
+        // has header, set it as collapsed by default, if collapse is enabled
+        // eslint-disable-next-line no-param-reassign
+        f[o.label] = props.collapseHeaders;
+      }
+      return f;
+    }, {});
+  });
+};
+function onMountedHook() {
+  this.computeDropup();
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        this.computeDropup();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+  $(this.$el).on('hidden.bs.dropdown', () => {
+    this.isOpen = false;
+  });
+  $(this.$el).on('shown.bs.dropdown', () => {
+    this.isOpen = true;
+  });
 }
 
 export default {
@@ -276,206 +488,19 @@ export default {
       type: Object,
     },
   },
-  data() {
+  setup(props, context) {
+    const state = getState(props);
+
+    const methods = getMethods(props, context, state);
+
+    setupWatches(props, context, state, methods);
+
+    onMounted(onMountedHook);
+
     return {
-      myValue: this.getDefaultValue(),
-      filter: '',
-      dropup: false,
-      isOpen: false,
-      collapsed: {},
+      ...toRefs(state),
+      ...methods,
     };
-  },
-  computed: {
-    values() {
-      return Object.values(this.selected).map(o => o.text);
-    },
-    valuesText() {
-      if (this.displayMax && this.displayMax < this.values.length) {
-        return this.displayText.replace('{0}', this.values.length);
-      }
-      return this.values.join(', ');
-    },
-    optionsMap() {
-      // For the optionsMap, use all options, not just the filtered ones
-      // so that selecting values searches entire list
-      return this.getOptionsMap(this.linearOptions);
-    },
-    selected() {
-      let selected = {};
-      if (this.myValue != null) {
-        let { myValue } = this;
-        if (!this.multiple) {
-          myValue = [this.myValue];
-        }
-        selected = myValue.reduce((s, v) => {
-          if (this.optionsMap[v]) {
-            Object.assign(s, {
-              [v]: this.optionsMap[v],
-            });
-          }
-          return s;
-        }, {});
-      }
-      return selected;
-    },
-    /**
-     * Create a list of the filtered options; i.e. those that match the search
-     */
-    filtered() {
-      return this.linearOptions.filter(this.optionMatch);
-    },
-    /**
-     * Create a linear list of all the options (headers included)
-     */
-    linearOptions() {
-      return this.options.reduce((f, o) => {
-        if (o.options) {
-          // push the header
-          f.push({
-            header: o.label,
-          });
-          f.push(...o.options.map(opt => Object.assign(opt, { parentHeader: o.label })));
-        } else {
-          // it's an item without group, push it to the list
-          f.push(o);
-        }
-        return f;
-      }, []);
-    },
-    emptyResults() {
-      return this.search && this.filtered.length === 0 && this.filter;
-    },
-    filterRegExp() {
-      return new RegExp(`${this.filter}`, 'ig');
-    },
-  },
-  watch: {
-    myValue(newVal) {
-      // emit the change event with the new value
-      this.$emit('input', newVal);
-    },
-    value(value) {
-      this.myValue = value;
-    },
-    options: {
-      immediate: true,
-      handler() {
-        this.validateOpions(this.options);
-        this.collapsed = this.options.reduce((f, o) => {
-          if (o.options) {
-            // has header, set it as collapsed by default, if collapse is enabled
-            f[o.label] = this.collapseHeaders;
-          }
-          return f;
-        }, {});
-      },
-    },
-    filter() {
-      this.$emit('filter', this.filter);
-    },
-  },
-  mounted() {
-    this.computeDropup();
-    let ticking = false;
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          this.computeDropup();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-    $(this.$el).on('hidden.bs.dropdown', () => {
-      this.isOpen = false;
-    });
-    $(this.$el).on('shown.bs.dropdown', () => {
-      this.isOpen = true;
-    });
-  },
-  methods: {
-    computeDropup() {
-      this.dropup = !inView.is(this.$el);
-    },
-    getOptionsMap(options, map = {}) {
-      return options.reduce((m, o) => {
-        if (!o.header) {
-          Object.assign(m, { [o.value]: o });
-        }
-        return m;
-      }, map);
-    },
-    optionMatch(o) {
-      const isNotCollapsed = (!o.parentHeader || !this.collapsed[o.parentHeader]);
-      const textMatches = this.textMatch(o.text || o.header);
-
-      return isNotCollapsed && (this.remote || textMatches);
-    },
-    textMatch(text) {
-      return text ? text.match(this.filterRegExp) !== null : true;
-    },
-    select(e, val) {
-      e.preventDefault();
-      if (this.optionsMap[val].disabled) {
-        e.stopPropagation();
-        return;
-      }
-      let newVal;
-      // for multiple, don't close the menu
-      if (this.multiple) {
-        e.stopPropagation();
-        // update the new selected items
-        newVal = Object.keys(this.selected).map(k => this.selected[k].value);
-        if (this.selected[val]) {
-          // remove it
-          newVal = newVal.filter(k => k !== val);
-        } else {
-          // add it
-          newVal.push(val);
-        }
-      } else {
-        // for single mode, just set it directly
-        newVal = val;
-      }
-      this.myValue = newVal;
-    },
-    selectAll() {
-      // when selecting all, concatenate the exiting selected values
-      // with the currently filtered ones
-      this.myValue = [].concat(
-        this.myValue || [],
-        this.filtered.filter(o => !o.header && !o.disabled).map(o => o.value)
-      );
-    },
-    selectNone() {
-      this.myValue = [];
-    },
-    toggle(event, label) {
-      this.collapsed[label] = !this.collapsed[label];
-    },
-    stopClick() {},
-    validateOpions(options, l = 0) {
-      options.forEach((o, i) => {
-        if (o.options) {
-          if (!o.label) {
-            console.warn(`No label specified for entry at position ${i}, level ${l}`);
-          }
-          this.validateOpions(o.options, l + 1);
-        } else if (!o.text) {
-          console.warn(`No text specified for entry at position ${i}, level ${l}`);
-        }
-      });
-    },
-    getDefaultValue() {
-      if (this.value !== null) {
-        return this.value;
-      }
-      if (this.multiple) {
-        return [];
-      }
-      return null;
-    },
   },
 };
 </script>
