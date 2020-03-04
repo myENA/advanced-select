@@ -2,7 +2,7 @@
   <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true, open: isOpen }">
     <select
       v-bind="$attrs"
-      v-model="myValue"
+      v-model="selectValue"
       :multiple="multiple"
       class="hide"
     >
@@ -283,6 +283,8 @@ export default {
       dropup: false,
       isOpen: false,
       collapsed: {},
+      // used for the hidden select
+      selectValue: this.getDefaultValue(),
     };
   },
   computed: {
@@ -356,6 +358,7 @@ export default {
     },
     value(value) {
       this.myValue = value;
+      this.selectValue = value;
     },
     options: {
       immediate: true,
