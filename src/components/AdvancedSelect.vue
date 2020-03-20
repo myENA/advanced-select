@@ -25,7 +25,9 @@
       <span v-else :class="$style.placeholder">{{texts.placeholder}}</span>
       &nbsp;<span class="caret"></span>
     </button>
-    <ul :class="[$style['dropdown-menu'], 'dropdown-menu', dropdownClass]">
+    <ul
+      role="menu"
+      :class="[$style['dropdown-menu'], 'dropdown-menu', dropdownClass]">
       <li v-if="controls && multiple" :class="$style.controls">
         <div class="btn-group btn-group-justified" role="group" aria-label="global actions">
           <div class="btn-group" role="group">
@@ -56,7 +58,9 @@
         </span>
       </li>
       <li v-else>
-        <ul :class="[$style['dropdown-menu'], 'dropdown-menu', $style.items]">
+        <ul
+          :class="[$style['dropdown-menu'], 'dropdown-menu', $style.items]"
+          >
           <li
             v-for="option in filtered"
             :key="option.value || option.header"
@@ -64,7 +68,7 @@
             :class="{
               'dropdown-header': option.header,
               active: !multiple && !!selected[option.value],
-              disabled: option.disabled,
+            disabled: option.disabled,
               'has-header': !!option.parentHeader,
             }">
             <span
@@ -72,9 +76,11 @@
               @click.prevent.stop="stopClick"
               >
               {{option.header}}
-              <a title="Toggle"
+              <a
+                v-if="collapseHeaders"
+                title="Toggle"
                 href="#" @click.prevent.stop="toggle($event, option.header)">
-                <i v-if="collapseHeaders"
+                <i
                   class="glyphicon"
                   :class="{
                     'glyphicon-chevron-down': !collapsed[option.header],
@@ -392,9 +398,13 @@ export default {
     });
     $(this.$el).on('hidden.bs.dropdown', () => {
       this.isOpen = false;
+      this.filter = '';
     });
     $(this.$el).on('shown.bs.dropdown', () => {
       this.isOpen = true;
+      if (this.search) {
+        $(`.${this.$style.search} input`, this.$el).focus();
+      }
     });
   },
   methods: {
