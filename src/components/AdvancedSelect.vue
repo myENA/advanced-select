@@ -396,6 +396,9 @@ export default {
     });
     $(this.$el).on('shown.bs.dropdown', () => {
       this.isOpen = true;
+      if (this.search) {
+        $(`.${this.$style.search} input`, this.$el).focus();
+      }
     });
   },
   methods: {
