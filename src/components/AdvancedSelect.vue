@@ -392,6 +392,7 @@ export default {
     });
     $(this.$el).on('hidden.bs.dropdown', () => {
       this.isOpen = false;
+      this.filter = '';
     });
     $(this.$el).on('shown.bs.dropdown', () => {
       this.isOpen = true;
