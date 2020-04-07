@@ -224,7 +224,7 @@ const escapeTextSafe = (nonEscapedText) => {
   let text = escapeHtml(nonEscapedText);
   text = text.replace(/&lt;br(\s\/)?&gt;/ig, '<br>');
   safeTags.forEach((t) => {
-    text = text.replace(new RegExp(`&lt;${t}&gt;`, 'ig'), `<${t}>`);
+    text = text.replace(new RegExp(`&lt;${t}( class=".*")&gt;`, 'ig'), `<${t}$1>`);
     text = text.replace(new RegExp(`&lt;/${t}&gt;`, 'ig'), `</${t}>`);
   });
   return text;
@@ -319,13 +319,13 @@ export default {
   },
   computed: {
     values() {
-      return Object.values(this.selected).map(o => o.icon ? '<i class="fa ' + escapeTextSafe(o.icon) +'"></i> ' + escapeTextSafe(o.text) : escapeTextSafe(o.text));
+      return Object.values(this.selected).map(o => o.icon ? '<i class="fa ' + o.icon +'"></i> ' + o.text : o.text);
     },
     valuesText() {
       if (this.displayMax && this.displayMax < this.values.length) {
         return this.displayText.replace('{0}', this.values.length);
       }
-      return this.values.join(', ');
+      return escapeTextSafe(this.values.join(', '));
     },
     optionsMap() {
       // For the optionsMap, use all options, not just the filtered ones
