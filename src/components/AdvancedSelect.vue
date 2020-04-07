@@ -21,7 +21,7 @@
       aria-haspopup="true" aria-expanded="false"
       v-bind="$attrs"
       @click="computeDropup">
-      <span v-if="values.length">{{valuesText}}</span>
+      <span v-if="values.length" v-html="valuesText"></span>
       <span v-else :class="$style.placeholder">{{texts.placeholder}}</span>
       &nbsp;<span class="caret"></span>
     </button>
@@ -92,6 +92,7 @@
             <a v-else
               :title="option.text"
               href="#" @click="select($event, option.value)">
+              <i v-if="option.icon" :class="['fa', 'pos-rel', option.icon]"/>
               {{option.text}}
               <i v-if="multiple"
                 class="glyphicon"
@@ -196,6 +197,12 @@
   }
 }
 </style>
+<style scoped>
+.fa.pos-rel {
+  position: relative;
+  top: 0;
+}
+</style>
 
 <script type="text/javascript">
 import $ from 'jquery';
@@ -205,6 +212,23 @@ inView.offset({
   top: 0,
   bottom: 300,
 });
+
+const safeTags = ['b', 'i', 'em', 'strong'];
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+const escapeTextSafe = (nonEscapedText) => {
+  let text = escapeHtml(nonEscapedText);
+  text = text.replace(/&lt;br(\s\/)?&gt;/ig, '<br>');
+  safeTags.forEach((t) => {
+    text = text.replace(new RegExp(`&lt;${t}&gt;`, 'ig'), `<${t}>`);
+    text = text.replace(new RegExp(`&lt;/${t}&gt;`, 'ig'), `</${t}>`);
+  });
+  return text;
+};
 
 function getOptionsFromVNodes(vnodes) {
   return vnodes.reduce((opts, vnode) => {
@@ -295,7 +319,7 @@ export default {
   },
   computed: {
     values() {
-      return Object.values(this.selected).map(o => o.text);
+      return Object.values(this.selected).map(o => o.icon ? '<i class="fa ' + escapeTextSafe(o.icon) +'"></i> ' + escapeTextSafe(o.text) : escapeTextSafe(o.text));
     },
     valuesText() {
       if (this.displayMax && this.displayMax < this.values.length) {
