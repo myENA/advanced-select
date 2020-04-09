@@ -2,18 +2,21 @@
   <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true, open: isOpen }">
     <select
       v-bind="$attrs"
-      v-model="selectValue"
+      v-model="myValue"
       :multiple="multiple"
       class="hide"
     >
       <template
-        v-for="option in filtered"
+        v-for="option in options"
       >
         <option
           :key="option.value"
           v-if="!option.header"
           :value="option.value"
           :disabled="option.disabled"
+          :class="{
+            'hide': !filtered.find(e => e.value === option.value),
+          }"
         >{{ option.text }}</option>
       </template>
     </select>
@@ -313,13 +316,11 @@ export default {
       dropup: false,
       isOpen: false,
       collapsed: {},
-      // used for the hidden select
-      selectValue: this.getDefaultValue(),
     };
   },
   computed: {
     values() {
-      return Object.values(this.selected).map(o => o.icon ? '<i class="fa ' + o.icon +'"></i> ' + o.text : o.text);
+      return Object.values(this.selected).map(o => (o.icon ? `<i class="fa ${o.icon}"></i> ${o.text}` : o.text));
     },
     valuesText() {
       if (this.displayMax && this.displayMax < this.values.length) {
@@ -388,7 +389,6 @@ export default {
     },
     value(value) {
       this.myValue = value;
-      this.selectValue = value;
     },
     options: {
       immediate: true,
