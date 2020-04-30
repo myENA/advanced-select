@@ -48,7 +48,7 @@
         </div>
       </li>
       <li v-if="search" :class="$style.search">
-        <input class="form-control" v-model="filter" placeholder="Search" autofocus="autofocus" />
+        <input class="form-control" v-model="filter" aria-label="Search" placeholder="Search" autofocus="autofocus" />
       </li>
       <li v-if="search && !filter && remote" :class="$style.empty">
         <span class="text-muted">
