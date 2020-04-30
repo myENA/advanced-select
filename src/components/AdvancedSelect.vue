@@ -130,7 +130,7 @@
       text-align: left;
       display: block;
       position: absolute;
-      top: 8px;
+      right: 20px;
       left: 10px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -204,10 +204,6 @@
 .fa.pos-rel {
   position: relative;
   top: 0;
-}
-.btn-group > .dropdown-toggle:not(:first-child) {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
 }
 </style>
 
