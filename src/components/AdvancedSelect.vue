@@ -29,7 +29,7 @@
       &nbsp;<span class="caret"></span>
     </button>
     <ul
-      role="menu"
+      role="list"
       :class="[$style['dropdown-menu'], 'dropdown-menu', dropdownClass]">
       <li v-if="controls && multiple" :class="$style.controls">
         <div class="btn-group btn-group-justified" role="group" aria-label="global actions">
