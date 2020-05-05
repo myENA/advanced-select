@@ -208,6 +208,7 @@
 .btn-group > .dropdown-toggle:not(:first-child) {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
+  height: 100%;
 }
 </style>
 
