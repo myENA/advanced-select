@@ -40,11 +40,32 @@ jobs:
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+              # download test reporter as a static binary
+              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+              chmod +x ./cc-test-reporter
+              ./cc-test-reporter before-build
+          when: always
       # run tests!
       - run: npm run test:unit
-      - run: npm run test:unit-coverage
+      - run:
+          name: coverage
+          command: |
+              npm run test:unit-coverage
+              ./cc-test-reporter after-build -t lcov
+          when: always
+      - run:
+          name: test results
+          command: |
+              mkdir test-results
+              mkdir test-results/mocha
+              cp test-results.xml test-results/mocha/
+      - store_test_results:
+          path: test-results
       - store_artifacts:
-          path: ./test-results.xml
+          path: ./test-results/mocha/test-results.xml
       - store_artifacts:
           path: ./coverage/lcov.info
           prefix: tests
