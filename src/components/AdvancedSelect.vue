@@ -242,13 +242,9 @@ function getOptionsFromVNodes(vnodes) {
   return vnodes.reduce((opts, vnode) => {
     if (vnode.tag === 'option') {
       // node is an option
-      opts.push(Object.assign({
-        text: vnode.children[0].text,
-      }, vnode.data.attrs, vnode.data.domProps));
+      opts.push({ text: vnode.children[0].text, ...vnode.data.attrs, ...vnode.data.domProps });
     } else if (vnode.tag === 'optgroup') {
-      opts.push(Object.assign({
-        options: getOptionsFromVNodes(vnode.children),
-      }, vnode.data.attrs, vnode.data.domProps));
+      opts.push({ options: getOptionsFromVNodes(vnode.children), ...vnode.data.attrs, ...vnode.data.domProps });
     } else {
       // ignore all the rest
     }
@@ -325,7 +321,7 @@ export default {
   },
   computed: {
     values() {
-      return Object.values(this.selected).map(o => (o.icon ? `<i class="fa ${o.icon}"></i> ${o.text}` : o.text));
+      return Object.values(this.selected).map((o) => (o.icon ? `<i class="fa ${o.icon}"></i> ${o.text}` : o.text));
     },
     valuesText() {
       if (this.displayMax && this.displayMax < this.values.length) {
@@ -372,7 +368,7 @@ export default {
           f.push({
             header: o.label,
           });
-          f.push(...o.options.map(opt => Object.assign(opt, { parentHeader: o.label })));
+          f.push(...o.options.map((opt) => Object.assign(opt, { parentHeader: o.label })));
         } else {
           // it's an item without group, push it to the list
           f.push(o);
@@ -468,10 +464,10 @@ export default {
       if (this.multiple) {
         e.stopPropagation();
         // update the new selected items
-        newVal = Object.keys(this.selected).map(k => this.selected[k].value);
+        newVal = Object.keys(this.selected).map((k) => this.selected[k].value);
         if (this.selected[val]) {
           // remove it
-          newVal = newVal.filter(k => k !== val);
+          newVal = newVal.filter((k) => k !== val);
         } else {
           // add it
           newVal.push(val);
@@ -487,7 +483,7 @@ export default {
       // with the currently filtered ones
       this.myValue = [].concat(
         this.myValue || [],
-        this.filtered.filter(o => !o.header && !o.disabled).map(o => o.value)
+        this.filtered.filter((o) => !o.header && !o.disabled).map((o) => o.value)
       );
     },
     selectNone() {
