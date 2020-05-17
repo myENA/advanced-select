@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --host localhost",
     "build": "node build.js",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit -R mocha-junit-reporter",
     "lint": "vue-cli-service lint",
     "build:example": "vue-cli-service build --dest example",
     "postversion": "git push && git push --tags && echo Run: \"npm publish\"",
@@ -45,6 +45,7 @@
     "jquery": "^3.4.1",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
+    "mocha-junit-reporter": "^1.23.3",
     "nyc": "^15.0.1",
     "vue": "^3.0.0-beta.13",
     "vue-cli-plugin-vue-next": "~0.1.2"
