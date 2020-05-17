@@ -37,7 +37,9 @@
   :options="options"
   :disabled="disabled"
   /&gt;</pre>
-      Or as the default slot
+      Or as the default slot <br>
+      <strong>Note: only list of options can be passed like this and changes are NOT detected.</strong>
+      Using props is recommended.
       <pre>&lt;advanced-select
   v-model="secondValue"
   :disabled="disabled"

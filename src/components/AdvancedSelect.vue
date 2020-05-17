@@ -7,7 +7,7 @@
       class="hide"
     >
       <template
-        v-for="option in options"
+        v-for="option in myOptions"
       >
         <option
           :key="option.value"
@@ -215,6 +215,7 @@
 <script type="text/javascript">
 import $ from 'jquery';
 import inView from 'in-view';
+import { ref, watch } from 'vue';
 
 inView.offset({
   top: 0,
@@ -238,19 +239,26 @@ const escapeTextSafe = (nonEscapedText) => {
   return text;
 };
 
-function getOptionsFromVNodes(vnodes) {
-  return vnodes.reduce((opts, vnode) => {
-    if (vnode.tag === 'option') {
-      // node is an option
-      opts.push({ text: vnode.children[0].text, ...vnode.data.attrs, ...vnode.data.domProps });
-    } else if (vnode.tag === 'optgroup') {
-      opts.push({ options: getOptionsFromVNodes(vnode.children), ...vnode.data.attrs, ...vnode.data.domProps });
-    } else {
-      // ignore all the rest
-    }
-    return opts;
-  }, []);
-}
+const getOptionsFromVNodes = (vnodes) => vnodes.reduce((opts, vnode) => {
+  if (vnode.type === 'option') {
+    // node is an option
+    opts.push({
+      text: vnode.children,
+      ...vnode.props,
+    });
+  } else {
+    // ignore all the rest, but warn that it's not supported
+    console.warn('Passing in default slot anything else than a list of <option> tags is not supported');
+  }
+  return opts;
+}, []);
+
+const getOptionsFromDefaultSlot = (slots) => {
+  if (!slots.default) {
+    return [];
+  }
+  return getOptionsFromVNodes(slots.default());
+};
 
 export default {
   inheritAttrs: false,
@@ -291,12 +299,7 @@ export default {
       type: String,
     },
     options: {
-      default() {
-        if (this.$slots.default) {
-          return getOptionsFromVNodes(this.$slots.default);
-        }
-        return [];
-      },
+      default: () => ([]),
       type: Array,
     },
     texts: {
@@ -362,7 +365,7 @@ export default {
      * Create a linear list of all the options (headers included)
      */
     linearOptions() {
-      return this.options.reduce((f, o) => {
+      return this.myOptions.reduce((f, o) => {
         if (o.options) {
           // push the header
           f.push({
@@ -391,13 +394,14 @@ export default {
     value(value) {
       this.myValue = value;
     },
-    options: {
+    myOptions: {
       immediate: true,
       handler() {
-        this.validateOpions(this.options);
-        this.collapsed = this.options.reduce((f, o) => {
+        this.validateOpions(this.myOptions);
+        this.collapsed = this.myOptions.reduce((f, o) => {
           if (o.options) {
             // has header, set it as collapsed by default, if collapse is enabled
+            // eslint-disable-next-line no-param-reassign
             f[o.label] = this.collapseHeaders;
           }
           return f;
@@ -514,6 +518,19 @@ export default {
       }
       return null;
     },
+  },
+  setup(props, ctx) {
+    const options = ref(props.options && props.options.length
+      ? props.options
+      : getOptionsFromDefaultSlot(ctx.slots));
+
+    watch(() => props.options, () => {
+      options.value = props.options;
+    });
+
+    return {
+      myOptions: options,
+    };
   },
 };
 </script>
