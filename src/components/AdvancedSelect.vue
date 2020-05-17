@@ -425,18 +425,20 @@ export default {
         ticking = true;
       }
     });
-    $(this.$el).on('hidden.bs.dropdown', () => {
+    $(this.$el).on('hidden.bs.dropdown', this.onHide);
+    $(this.$el).on('shown.bs.dropdown', this.onShow);
+  },
+  methods: {
+    onHide() {
       this.isOpen = false;
       this.filter = '';
-    });
-    $(this.$el).on('shown.bs.dropdown', () => {
+    },
+    onShow() {
       this.isOpen = true;
       if (this.search) {
         $(`.${this.$style.search} input`, this.$el).focus();
       }
-    });
-  },
-  methods: {
+    },
     computeDropup() {
       this.dropup = !inView.is(this.$el);
     },

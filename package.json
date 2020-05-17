@@ -67,7 +67,8 @@
       "src/**/*.{js,ts,vue}"
     ],
     "exclude": [
-      "src/*.js"
+      "src/*.js",
+      "**/entry.js"
     ],
     "reporter": [
       "lcov",

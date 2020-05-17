@@ -12,13 +12,19 @@ describe('AdvancedSelect.vue', () => {
       });
       expect(wrapper.exists('div.btn-group > button')).to.be.true;
     });
-    it('the passed options', () => {
+    it('the passed options', async () => {
       const wrapper = shallowMount(Select, {
         props: {
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
         },
       });
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(2);
+      // change options
+      wrapper.setProps({
+        options: [{ text: '1', value: 1 }],
+      });
+      await wrapper.vm.$nextTick();
+      expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(1);
     });
     it('grouped options', () => {
       const wrapper = shallowMount(Select, {
@@ -54,6 +60,14 @@ describe('AdvancedSelect.vue', () => {
         },
       });
       expect(wrapper.exists('div.btn-group > ul > li > .btn-group')).to.be.true;
+    });
+    it.skip('with slot', () => {
+      const wrapper = shallowMount(Select, {
+        slots: {
+          default: '<option value="1">Text</option>',
+        },
+      });
+      expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(2);
     });
     describe('does not render a btn-group either "controls" or "multiple" are false', () => {
       it('"controls" false', () => {
@@ -181,6 +195,8 @@ describe('AdvancedSelect.vue', () => {
       expect(wrapper.vm.myValue).to.deep.equal([1]);
       links[1].trigger('click');
       expect(wrapper.vm.myValue).to.deep.equal([1, 2]);
+      links[1].trigger('click');
+      expect(wrapper.vm.myValue).to.deep.equal([1]);
     });
     it('Event is emmited on single type with selected value', async () => {
       const wrapper = shallowMount(Select, {
@@ -293,7 +309,7 @@ describe('AdvancedSelect.vue', () => {
       expect(wrapper.emitted().input).to.exist;
       expect(wrapper.emitted().input[0][0]).to.deep.equal([]);
     });
-    it.skip('Search returns correct results', () => {
+    it('Search returns correct results', async () => {
       const wrapper = shallowMount(Select, {
         props: {
           options: [
@@ -314,23 +330,63 @@ describe('AdvancedSelect.vue', () => {
         },
       });
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(5);
-      wrapper.setData({
-        filter: 'opt',
-      });
+      wrapper.vm.filter = 'opt';
+      await wrapper.vm.$nextTick();
       expect(wrapper.vm.filtered).to.deep.equal([
         { text: 'Option 1', value: 1 },
         { text: 'Option 2', value: 2 },
       ]);
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(2);
-      wrapper.setData({
-        filter: 'anot',
-      });
+      wrapper.vm.filter = 'anot';
+      await wrapper.vm.$nextTick();
       expect(wrapper.vm.filtered).to.deep.equal([
         { parentHeader: 'Group', text: 'Another 3', value: 3 },
         { parentHeader: 'Group', text: 'Another 4', value: 4 },
         { parentHeader: 'Group', text: 'Another 5', value: 5 },
       ]);
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(3);
+    });
+
+    it('Filter event is triggered on search', async () => {
+      const wrapper = shallowMount(Select, {
+        props: {
+          options: [
+            { text: 'Option 1', value: 1 },
+            { text: 'Option 2', value: 2 },
+          ],
+          search: true,
+        },
+      });
+      wrapper.vm.filter = 'Option 1';
+      await wrapper.vm.$nextTick();
+      expect(wrapper.emitted().filter).to.exist;
+      expect(wrapper.emitted().filter[0][0]).to.deep.equal('Option 1');
+    });
+
+    it('Option groups can be collapsed', async () => {
+      const wrapper = shallowMount(Select, {
+        props: {
+          options: [
+            {
+              label: 'Group',
+              options: [
+                { text: 'Another 3', value: 3 },
+                { text: 'Another 4', value: 4 },
+                { text: 'Another 5', value: 5 },
+              ],
+            },
+          ],
+          collapseHeaders: true,
+        },
+      });
+      const headers = wrapper.findAll('div.btn-group > ul > li > ul > li > span > a');
+      expect(headers).to.have.lengthOf(1);
+      headers[0].trigger('click');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.collapsed).to.deep.eq({ Group: false });
+      headers[0].trigger('click');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.collapsed).to.deep.eq({ Group: true });
     });
   });
 });
