@@ -1,25 +1,5 @@
 <template>
   <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true, open: isOpen }">
-    <select
-      v-bind="$attrs"
-      v-model="myValue"
-      :multiple="multiple"
-      class="hide"
-    >
-      <template
-        v-for="option in options"
-      >
-        <option
-          :key="option.value"
-          v-if="!option.header"
-          :value="option.value"
-          :disabled="option.disabled"
-          :class="{
-            'hide': !filtered.find(e => e.value === option.value),
-          }"
-        >{{ option.text }}</option>
-      </template>
-    </select>
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false"
       v-bind="$attrs"
