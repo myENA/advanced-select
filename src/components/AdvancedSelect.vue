@@ -10,6 +10,7 @@
     </button>
     <ul
       role="list"
+      :id="listId"
       :class="[$style['dropdown-menu'], 'dropdown-menu', dropdownClass]">
       <li v-if="controls && multiple" :class="$style.controls">
         <div class="btn-group btn-group-justified" role="group" aria-label="global actions">
@@ -304,6 +305,12 @@ export default {
     };
   },
   computed: {
+    listId() {
+      if (this.$attrs.id) {
+        return `${this.$attrs.id}_ul`;
+      }
+      return null;
+    },
     values() {
       return Object.values(this.selected).map(o => (o.icon ? `<i class="fa ${o.icon}"></i> ${o.text}` : o.text));
     },
