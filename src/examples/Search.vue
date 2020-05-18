@@ -185,7 +185,7 @@ export default {
             { value: 6, text: 'Option Six' },
             { value: 7, text: 'Option Seven' },
             { value: 8, text: 'Option Eight' },
-          ].filter(o => reg.test(o.text));
+          ].filter((o) => reg.test(o.text));
         }, 2000);
       } else {
         this.texts = {

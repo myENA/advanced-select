@@ -1,55 +1,89 @@
 {
   "name": "@myena/advanced-select",
+  "version": "0.8.7",
   "description": "Vue Advanced Select control used in ENA projects",
-  "libname": "MyEna",
-  "version": "0.8.6",
-  "repository": "github:myENA/advanced-select",
-  "keywords": [
-    "vue",
-    "select",
-    "bootstrap"
-  ],
   "author": "Andy Ghiuta <andy.ghiuta@gmail.com>",
-  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve --host localhost",
     "build": "node build.js",
-    "build:example": "vue-cli-service build --dest example",
+    "test:unit": "vue-cli-service test:unit -R mocha-junit-reporter",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit",
-    "test:unit-watch": "vue-cli-service test:unit --watch",
+    "build:example": "vue-cli-service build --dest example",
+    "postversion": "git push && git push --tags && echo Run: \"npm publish\"",
     "preversion": "npm run test:unit && npm run build && git add -A dist",
-    "postversion": "git push && git push --tags && echo Run: \"npm publish\""
+    "test:unit-watch": "vue-cli-service test:unit --watch",
+    "test:unit-coverage": "cross-env NODE_ENV=test nyc vue-cli-service test:unit"
   },
   "main": "dist/index.js",
   "files": [
     "dist/*",
     "src/components/*"
   ],
-  "peerDependencies": {
-    "bootstrap": "^3.3.7",
-    "font-awesome": "^4.7.0",
-    "jquery": "^3.3.1",
-    "vue": "^2.5.17"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.5",
-    "@vue/cli-plugin-eslint": "^3.0.5",
-    "@vue/cli-plugin-unit-mocha": "^3.0.5",
-    "@vue/cli-service": "^3.0.5",
-    "@vue/eslint-config-airbnb": "^3.0.5",
-    "@vue/test-utils": "^1.0.0-beta.20",
+    "@vue/cli-plugin-babel": "^4.3.1",
+    "@vue/cli-plugin-eslint": "^4.3.1",
+    "@vue/cli-plugin-unit-mocha": "^4.3.1",
+    "@vue/cli-service": "^4.3.1",
+    "@vue/compiler-sfc": "^3.0.0-beta.13",
+    "@vue/eslint-config-airbnb": "^5.0.2",
+    "@vue/test-utils": "^2.0.0-alpha.1",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-istanbul": "^6.0.0",
     "bootstrap": "^3.4.1",
     "chai": "^4.1.2",
+    "core-js": "^3.6.4",
+    "cross-env": "^7.0.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^7.0.0-alpha.0",
     "firebase-tools": "^7.3.0",
     "font-awesome": "^4.7.0",
     "glob": "^7.1.3",
     "in-view": "^0.6.1",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "jquery": "^3.4.1",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
-    "vue": "^2.5.17",
-    "vue-template-compiler": "^2.5.17"
+    "mocha-junit-reporter": "^1.23.3",
+    "nyc": "^15.0.1",
+    "vue": "^3.0.0-beta.13",
+    "vue-cli-plugin-vue-next": "~0.1.2"
   },
-  "dependencies": {}
+  "peerDependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.3.1",
+    "vue": "^3.0.0-beta.1"
+  },
+  "keywords": [
+    "vue",
+    "select",
+    "bootstrap"
+  ],
+  "libname": "MyEna",
+  "license": "MIT",
+  "nyc": {
+    "include": [
+      "src/**/*.{js,ts,vue}"
+    ],
+    "exclude": [
+      "src/*.js",
+      "**/entry.js"
+    ],
+    "reporter": [
+      "lcov",
+      "clover",
+      "text",
+      "text-summary"
+    ],
+    "extension": [
+      ".vue",
+      ".js",
+      ".ts"
+    ],
+    "cache": true,
+    "all": true
+  },
+  "repository": "github:myENA/advanced-select"
 }

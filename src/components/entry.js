@@ -7,7 +7,7 @@ const components = {
 
 // global register components
 function register() {
-  Object.keys(components).forEach(name => Vue.component(
+  Object.keys(components).forEach((name) => Vue.component(
     `${LIBNAME}${name}`,
     components[name],
     {

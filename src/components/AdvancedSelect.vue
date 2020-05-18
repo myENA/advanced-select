@@ -1,25 +1,5 @@
 <template>
   <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true, open: isOpen }">
-    <select
-      v-bind="$attrs"
-      v-model="myValue"
-      :multiple="multiple"
-      class="hide"
-    >
-      <template
-        v-for="option in options"
-      >
-        <option
-          :key="option.value"
-          v-if="!option.header"
-          :value="option.value"
-          :disabled="option.disabled"
-          :class="{
-            'hide': !filtered.find(e => e.value === option.value),
-          }"
-        >{{ option.text }}</option>
-      </template>
-    </select>
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false"
       v-bind="$attrs"
@@ -30,6 +10,7 @@
     </button>
     <ul
       role="list"
+      :id="listId"
       :class="[$style['dropdown-menu'], 'dropdown-menu', dropdownClass]">
       <li v-if="controls && multiple" :class="$style.controls">
         <div class="btn-group btn-group-justified" role="group" aria-label="global actions">
@@ -215,6 +196,7 @@
 <script type="text/javascript">
 import $ from 'jquery';
 import inView from 'in-view';
+import { ref, watch } from 'vue';
 
 inView.offset({
   top: 0,
@@ -238,23 +220,26 @@ const escapeTextSafe = (nonEscapedText) => {
   return text;
 };
 
-function getOptionsFromVNodes(vnodes) {
-  return vnodes.reduce((opts, vnode) => {
-    if (vnode.tag === 'option') {
-      // node is an option
-      opts.push(Object.assign({
-        text: vnode.children[0].text,
-      }, vnode.data.attrs, vnode.data.domProps));
-    } else if (vnode.tag === 'optgroup') {
-      opts.push(Object.assign({
-        options: getOptionsFromVNodes(vnode.children),
-      }, vnode.data.attrs, vnode.data.domProps));
-    } else {
-      // ignore all the rest
-    }
-    return opts;
-  }, []);
-}
+const getOptionsFromVNodes = (vnodes) => vnodes.reduce((opts, vnode) => {
+  if (vnode.type === 'option') {
+    // node is an option
+    opts.push({
+      text: vnode.children,
+      ...vnode.props,
+    });
+  } else {
+    // ignore all the rest, but warn that it's not supported
+    console.warn('Passing in default slot anything else than a list of <option> tags is not supported');
+  }
+  return opts;
+}, []);
+
+const getOptionsFromDefaultSlot = (slots) => {
+  if (!slots.default) {
+    return [];
+  }
+  return getOptionsFromVNodes(slots.default());
+};
 
 export default {
   inheritAttrs: false,
@@ -295,12 +280,7 @@ export default {
       type: String,
     },
     options: {
-      default() {
-        if (this.$slots.default) {
-          return getOptionsFromVNodes(this.$slots.default);
-        }
-        return [];
-      },
+      default: () => ([]),
       type: Array,
     },
     texts: {
@@ -324,8 +304,14 @@ export default {
     };
   },
   computed: {
+    listId() {
+      if (this.$attrs.id) {
+        return `${this.$attrs.id}_ul`;
+      }
+      return null;
+    },
     values() {
-      return Object.values(this.selected).map(o => (o.icon ? `<i class="fa ${o.icon}"></i> ${o.text}` : o.text));
+      return Object.values(this.selected).map((o) => (o.icon ? `<i class="fa ${o.icon}"></i> ${o.text}` : o.text));
     },
     valuesText() {
       if (this.displayMax && this.displayMax < this.values.length) {
@@ -366,13 +352,13 @@ export default {
      * Create a linear list of all the options (headers included)
      */
     linearOptions() {
-      return this.options.reduce((f, o) => {
+      return this.myOptions.reduce((f, o) => {
         if (o.options) {
           // push the header
           f.push({
             header: o.label,
           });
-          f.push(...o.options.map(opt => Object.assign(opt, { parentHeader: o.label })));
+          f.push(...o.options.map((opt) => Object.assign(opt, { parentHeader: o.label })));
         } else {
           // it's an item without group, push it to the list
           f.push(o);
@@ -395,13 +381,14 @@ export default {
     value(value) {
       this.myValue = value;
     },
-    options: {
+    myOptions: {
       immediate: true,
       handler() {
-        this.validateOpions(this.options);
-        this.collapsed = this.options.reduce((f, o) => {
+        this.validateOpions(this.myOptions);
+        this.collapsed = this.myOptions.reduce((f, o) => {
           if (o.options) {
             // has header, set it as collapsed by default, if collapse is enabled
+            // eslint-disable-next-line no-param-reassign
             f[o.label] = this.collapseHeaders;
           }
           return f;
@@ -425,18 +412,20 @@ export default {
         ticking = true;
       }
     });
-    $(this.$el).on('hidden.bs.dropdown', () => {
+    $(this.$el).on('hidden.bs.dropdown', this.onHide);
+    $(this.$el).on('shown.bs.dropdown', this.onShow);
+  },
+  methods: {
+    onHide() {
       this.isOpen = false;
       this.filter = '';
-    });
-    $(this.$el).on('shown.bs.dropdown', () => {
+    },
+    onShow() {
       this.isOpen = true;
       if (this.search) {
         $(`.${this.$style.search} input`, this.$el).focus();
       }
-    });
-  },
-  methods: {
+    },
     computeDropup() {
       this.dropup = !inView.is(this.$el);
     },
@@ -468,10 +457,10 @@ export default {
       if (this.multiple) {
         e.stopPropagation();
         // update the new selected items
-        newVal = Object.keys(this.selected).map(k => this.selected[k].value);
+        newVal = Object.keys(this.selected).map((k) => this.selected[k].value);
         if (this.selected[val]) {
           // remove it
-          newVal = newVal.filter(k => k !== val);
+          newVal = newVal.filter((k) => k !== val);
         } else {
           // add it
           newVal.push(val);
@@ -487,7 +476,7 @@ export default {
       // with the currently filtered ones
       this.myValue = [].concat(
         this.myValue || [],
-        this.filtered.filter(o => !o.header && !o.disabled).map(o => o.value)
+        this.filtered.filter((o) => !o.header && !o.disabled).map((o) => o.value)
       );
     },
     selectNone() {
@@ -518,6 +507,19 @@ export default {
       }
       return null;
     },
+  },
+  setup(props, ctx) {
+    const options = ref(props.options && props.options.length
+      ? props.options
+      : getOptionsFromDefaultSlot(ctx.slots));
+
+    watch(() => props.options, () => {
+      options.value = props.options;
+    });
+
+    return {
+      myOptions: options,
+    };
   },
 };
 </script>

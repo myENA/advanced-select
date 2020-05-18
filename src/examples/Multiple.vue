@@ -7,6 +7,7 @@
       <label>Pick an option:</label>
       <div>
         <advanced-select
+          id="multiple-first"
           v-model="value"
           :options="options"
           :multiple="multiple"
@@ -16,6 +17,7 @@
     </div>
     <div>
       <pre>&lt;advanced-select
+  id="multiple-first"
   v-model="value"
   :options="options"
   :multiple="multiple"

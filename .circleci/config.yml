@@ -42,6 +42,24 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       # run tests!
       - run: npm run test:unit
+      - run:
+          name: coverage
+          command: |
+              npm run test:unit-coverage
+          when: always
+      - run:
+          name: test results
+          command: |
+              mkdir test-results
+              mkdir test-results/mocha
+              cp test-results.xml test-results/mocha/
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: ./test-results/mocha/test-results.xml
+      - store_artifacts:
+          path: ./coverage/lcov.info
+          prefix: tests
 
   build:
     docker:
