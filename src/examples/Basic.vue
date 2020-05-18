@@ -5,6 +5,7 @@
       <label>Pick an option:</label>
       <div>
         <advanced-select
+          id="basic-setup"
           v-model="value"
           :options="options"
           :disabled="disabled"
@@ -33,6 +34,7 @@
     <div>
       Options can be passed as props
       <pre>&lt;advanced-select
+  id="basic-setup"
   v-model="value"
   :options="options"
   :disabled="disabled"
