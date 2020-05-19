@@ -1,7 +1,24 @@
 <template>
-  <div :class="{ dropup, [$style['btn-group']]: true, 'btn-group': true, open: isOpen }">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false"
+  <div
+    :class="{
+      dropup,
+      [$style['btn-group']]: true,
+      'btn-group': true,
+      open: isOpen,
+    }"
+  >
+    <button
+      type="button"
+      :class="{
+        'is-multiple': multiple,
+        'is-controls': controls,
+        'is-search': search,
+        'is-remote': remote,
+      }"
+      :aria-expanded="isOpen ? 'true' : 'false'"
+      class="btn btn-default dropdown-toggle"
+      data-toggle="dropdown"
+      aria-haspopup="true"
       v-bind="$attrs"
       @click="computeDropup">
       <span v-if="values.length" v-html="valuesText"></span>
@@ -223,13 +240,9 @@ function getOptionsFromVNodes(vnodes) {
   return vnodes.reduce((opts, vnode) => {
     if (vnode.tag === 'option') {
       // node is an option
-      opts.push(Object.assign({
-        text: vnode.children[0].text,
-      }, vnode.data.attrs, vnode.data.domProps));
+      opts.push({ text: vnode.children[0].text, ...vnode.data.attrs, ...vnode.data.domProps });
     } else if (vnode.tag === 'optgroup') {
-      opts.push(Object.assign({
-        options: getOptionsFromVNodes(vnode.children),
-      }, vnode.data.attrs, vnode.data.domProps));
+      opts.push({ options: getOptionsFromVNodes(vnode.children), ...vnode.data.attrs, ...vnode.data.domProps });
     } else {
       // ignore all the rest
     }
