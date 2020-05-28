@@ -25,7 +25,7 @@ npm install @myena/advanced-select
 
 ## Demo
 
-https://vueadvancedselect.firebaseapp.com/
+https://myena-advanced-select.netlify.app/
 
 ## Usage
 
