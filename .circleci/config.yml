@@ -65,17 +65,9 @@ jobs:
             - firebase.json
 
   deploy:
-    docker:
-      - image: circleci/node:10.13.0
-
-    working_directory: ~/repo
-
     steps:
-      - restore_cache:
-          key: v1-build-{{ .Environment.CIRCLE_SHA1 }}
       - run:
-          name: Deploy Master to Firebase
-          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+          command: curl -X POST -d {} ${NETLIFY_HOOK}
 
 workflows:
   version: 2

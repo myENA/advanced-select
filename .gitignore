@@ -22,3 +22,5 @@ yarn-error.log*
 /proj.sublime-workspace
 .firebase
 example
+.nyc_output/
+coverage/
