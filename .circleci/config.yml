@@ -65,6 +65,9 @@ jobs:
             - firebase.json
 
   deploy:
+    docker:
+      - image: circleci/node:10.13.0
+
     steps:
       - run:
           command: curl -X POST -d {} ${NETLIFY_HOOK}
