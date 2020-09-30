@@ -25,3 +25,4 @@ example
 .nyc_output/
 coverage/
 test-results.xml
+reports/

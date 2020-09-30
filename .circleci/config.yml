@@ -6,7 +6,7 @@ version: 2
 jobs:
   install:
     docker:
-      - image: circleci/node:10.13.0
+      - image: circleci/node:14.7.0
 
     working_directory: ~/repo
 
@@ -33,7 +33,7 @@ jobs:
             - ~/repo
   test:
     docker:
-      - image: circleci/node:10.13.0
+      - image: circleci/node:14.7.0
 
     working_directory: ~/repo
 
@@ -41,29 +41,20 @@ jobs:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       # run tests!
-      - run: npm run test:unit
       - run:
-          name: coverage
-          command: |
-              npm run test:unit-coverage
-          when: always
-      - run:
-          name: test results
-          command: |
-              mkdir test-results
-              mkdir test-results/mocha
-              cp test-results.xml test-results/mocha/
+          command: npm run test:ci
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
       - store_test_results:
-          path: test-results
+          path: ./reports/junit/
       - store_artifacts:
-          path: ./test-results/mocha/test-results.xml
+          path: ./reports/junit
       - store_artifacts:
           path: ./coverage/lcov.info
-          prefix: tests
 
   build:
     docker:
-      - image: circleci/node:10.13.0
+      - image: circleci/node:14.7.0
 
     working_directory: ~/repo
 
@@ -79,21 +70,6 @@ jobs:
           paths:
             - example
             - node_modules
-            - .firebaserc
-            - firebase.json
-
-  deploy:
-    docker:
-      - image: circleci/node:10.13.0
-
-    working_directory: ~/repo
-
-    steps:
-      - restore_cache:
-          key: v1-build-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Deploy Master to Firebase
-          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
 workflows:
   version: 2
@@ -107,10 +83,3 @@ workflows:
       - build:
           requires:
             - install
-      - deploy:
-          requires:
-            - test
-            - build
-          filters:
-            branches:
-              only: master

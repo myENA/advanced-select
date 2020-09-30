@@ -1,12 +1,15 @@
 module.exports = {
   root: true,
+
   env: {
     node: true,
   },
+
   extends: [
     '@vue/airbnb',
     'plugin:vue/vue3-essential',
   ],
+
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -43,10 +46,24 @@ module.exports = {
       ObjectPattern: { multiline: true },
     }],
   },
+
   parserOptions: {
     parser: 'babel-eslint',
   },
+
   globals: {
     LIBNAME: true,
   },
+
+  overrides: [
+    {
+      files: [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)'
+      ],
+      env: {
+        mocha: true
+      }
+    }
+  ]
 };
