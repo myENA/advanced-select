@@ -1,5 +1,6 @@
 import { shallowMount, config } from '@vue/test-utils';
 import Select from '@/components/AdvancedSelect.vue';
+import { nextTick } from 'vue';
 
 config.global.mocks = config.global.mocks || {};
 config.global.mocks.$style = {};
@@ -25,7 +26,7 @@ describe('AdvancedSelect.vue', () => {
       wrapper.setProps({
         options: [{ text: '1', value: 1 }],
       });
-      await wrapper.vm.$nextTick();
+      await nextTick();
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).toHaveLength(1);
     });
     it('grouped options', () => {
@@ -105,7 +106,7 @@ describe('AdvancedSelect.vue', () => {
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
           displayMax: 1,
           multiple: true,
-          value: [1],
+          modelValue: [1],
         },
       });
       expect(wrapper.find('div.btn-group > button > span').text()).toBe('1');
@@ -116,7 +117,7 @@ describe('AdvancedSelect.vue', () => {
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
           displayMax: 1,
           multiple: true,
-          value: [1, 2],
+          modelValue: [1, 2],
         },
       });
       expect(wrapper.find('div.btn-group > button > span').text()).toBe('2 items selected');
@@ -139,14 +140,14 @@ describe('AdvancedSelect.vue', () => {
       const wrapper = shallowMount(Select, {
         props: {
           options: [{ text: 'Empty', value: '' }, { text: '0', value: 0 }, { text: '1', value: 1 }, { text: '2', value: 2 }],
-          value: 0,
+          modelValue: 0,
         },
       });
       expect(wrapper.vm.myValue).toBe(0);
       wrapper.setProps({
-        value: '',
+        modelValue: '',
       });
-      await wrapper.vm.$nextTick();
+      await nextTick();
       expect(wrapper.vm.myValue).toBe('');
     });
     it('Value is set on single type', () => {
@@ -208,8 +209,8 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       await links[0].trigger('click');
-      expect(wrapper.emitted().input).toBeDefined();
-      expect(wrapper.emitted().input[0][0]).toEqual(1);
+      expect(wrapper.emitted()['update:modelValue']).toBeDefined();
+      expect(wrapper.emitted()['update:modelValue'][0][0]).toEqual(1);
     });
     it('Event is emmited on multiple type with selected value', async () => {
       const wrapper = shallowMount(Select, {
@@ -220,11 +221,11 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       await links[0].trigger('click');
-      expect(wrapper.emitted().input).toBeDefined();
-      expect(wrapper.emitted().input[0][0]).toEqual([1]);
+      expect(wrapper.emitted()['update:modelValue']).toBeDefined();
+      expect(wrapper.emitted()['update:modelValue'][0][0]).toEqual([1]);
       await links[1].trigger('click');
-      expect(wrapper.emitted().input).toBeDefined();
-      expect(wrapper.emitted().input[1][0]).toEqual([1, 2]);
+      expect(wrapper.emitted()['update:modelValue']).toBeDefined();
+      expect(wrapper.emitted()['update:modelValue'][1][0]).toEqual([1, 2]);
     });
     it('Disabled item is not triggering change', async () => {
       const wrapper = shallowMount(Select, {
@@ -237,10 +238,10 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       await links[1].trigger('click');
-      expect(wrapper.emitted().input).toBeFalsy();
+      expect(wrapper.emitted()['update:modelValue']).toBeFalsy();
       await links[0].trigger('click');
-      expect(wrapper.emitted().input).toBeDefined();
-      expect(wrapper.emitted().input[0][0]).toBe(1);
+      expect(wrapper.emitted()['update:modelValue']).toBeDefined();
+      expect(wrapper.emitted()['update:modelValue'][0][0]).toBe(1);
     });
     it('All values are set on "Select all"', async () => {
       const wrapper = shallowMount(Select, {
@@ -261,9 +262,9 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
       await links[0].trigger('click');
-      expect(wrapper.emitted().input).toBeDefined();
-      expect(wrapper.emitted().input[0][0]).toEqual([1, 2, 3]);
-      expect(wrapper.emitted().input[0][0].length).toBe(3);
+      expect(wrapper.emitted()['update:modelValue']).toBeDefined();
+      expect(wrapper.emitted()['update:modelValue'][0][0]).toEqual([1, 2, 3]);
+      expect(wrapper.emitted()['update:modelValue'][0][0].length).toBe(3);
     });
     it('Disabled values are not set on "Select all"', async () => {
       const wrapper = shallowMount(Select, {
@@ -285,9 +286,9 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
       await links[0].trigger('click');
-      expect(wrapper.emitted().input).toBeDefined();
-      expect(wrapper.emitted().input[0][0]).toEqual([1, 2, 3]);
-      expect(wrapper.emitted().input[0][0].length).toBe(3);
+      expect(wrapper.emitted()['update:modelValue']).toBeDefined();
+      expect(wrapper.emitted()['update:modelValue'][0][0]).toEqual([1, 2, 3]);
+      expect(wrapper.emitted()['update:modelValue'][0][0].length).toBe(3);
     });
     it('No values are set on "Select none"', async () => {
       const wrapper = shallowMount(Select, {
@@ -308,8 +309,8 @@ describe('AdvancedSelect.vue', () => {
       });
       const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
       await links[1].trigger('click');
-      expect(wrapper.emitted().input).toBeDefined();
-      expect(wrapper.emitted().input[0][0]).toEqual([]);
+      expect(wrapper.emitted()['update:modelValue']).toBeDefined();
+      expect(wrapper.emitted()['update:modelValue'][0][0]).toEqual([]);
     });
     it('Search returns correct results', async () => {
       const wrapper = shallowMount(Select, {
@@ -333,14 +334,14 @@ describe('AdvancedSelect.vue', () => {
       });
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).toHaveLength(5);
       wrapper.vm.filter = 'opt';
-      await wrapper.vm.$nextTick();
+      await nextTick();
       expect(wrapper.vm.filtered).toEqual([
         { text: 'Option 1', value: 1 },
         { text: 'Option 2', value: 2 },
       ]);
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).toHaveLength(2);
       wrapper.vm.filter = 'anot';
-      await wrapper.vm.$nextTick();
+      await nextTick();
       expect(wrapper.vm.filtered).toEqual([
         { parentHeader: 'Group', text: 'Another 3', value: 3 },
         { parentHeader: 'Group', text: 'Another 4', value: 4 },
@@ -360,7 +361,7 @@ describe('AdvancedSelect.vue', () => {
         },
       });
       wrapper.vm.filter = 'Option 1';
-      await wrapper.vm.$nextTick();
+      await nextTick();
       expect(wrapper.emitted().filter).toBeDefined();
       expect(wrapper.emitted().filter[0][0]).toEqual('Option 1');
     });
@@ -384,10 +385,10 @@ describe('AdvancedSelect.vue', () => {
       const headers = wrapper.findAll('div.btn-group > ul > li > ul > li > span > a');
       expect(headers).toHaveLength(1);
       headers[0].trigger('click');
-      await wrapper.vm.$nextTick();
+      await nextTick();
       expect(wrapper.vm.collapsed).toEqual({ Group: false });
       headers[0].trigger('click');
-      await wrapper.vm.$nextTick();
+      await nextTick();
       expect(wrapper.vm.collapsed).toEqual({ Group: true });
     });
   });

@@ -244,7 +244,7 @@ const getOptionsFromDefaultSlot = (slots) => {
 export default {
   inheritAttrs: false,
   props: {
-    value: {
+    modelValue: {
       default: null,
     },
     multiple: {
@@ -376,9 +376,9 @@ export default {
   watch: {
     myValue(newVal) {
       // emit the change event with the new value
-      this.$emit('input', newVal);
+      this.$emit('update:modelValue', newVal);
     },
-    value(value) {
+    modelValue(value) {
       this.myValue = value;
     },
     myOptions: {
@@ -499,8 +499,8 @@ export default {
       });
     },
     getDefaultValue() {
-      if (this.value !== null) {
-        return this.value;
+      if (this.modelValue !== null) {
+        return this.modelValue;
       }
       if (this.multiple) {
         return [];
