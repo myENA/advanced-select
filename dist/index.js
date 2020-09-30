@@ -1096,6 +1096,13 @@ module.exports = function from(arrayLike /* , mapfn = undefined, thisArg = undef
 
 /***/ }),
 
+/***/ "4f88":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "50c4":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1690,13 +1697,6 @@ module.exports = function (NAME) {
   });
 };
 
-
-/***/ }),
-
-/***/ "760d":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -3363,6 +3363,17 @@ module.exports = function (object, names) {
 
 /***/ }),
 
+/***/ "caab":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_AdvancedSelect_vue_vue_type_style_index_1_id_ddcedce0_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("4f88");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_AdvancedSelect_vue_vue_type_style_index_1_id_ddcedce0_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_AdvancedSelect_vue_vue_type_style_index_1_id_ddcedce0_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ 
+
+/***/ }),
+
 /***/ "cc12":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3377,17 +3388,6 @@ module.exports = function (it) {
   return EXISTS ? document.createElement(it) : {};
 };
 
-
-/***/ }),
-
-/***/ "cc4d":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_AdvancedSelect_vue_vue_type_style_index_1_id_1d1f2842_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("760d");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_AdvancedSelect_vue_vue_type_style_index_1_id_1d1f2842_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_AdvancedSelect_vue_vue_type_style_index_1_id_1d1f2842_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- 
 
 /***/ }),
 
@@ -4255,7 +4255,7 @@ function _defineProperty(obj, key, value) {
 
   return obj;
 }
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/AdvancedSelect.vue?vue&type=template&id=1d1f2842&scoped=true&bindings={"value":"props","multiple":"props","search":"props","remote":"props","controls":"props","collapseHeaders":"props","displayMax":"props","displayText":"props","dropdownClass":"props","options":"props","texts":"props","myValue":"data","filter":"data","dropup":"data","isOpen":"data","collapsed":"data","listId":"options","values":"options","valuesText":"options","optionsMap":"options","selected":"options","filtered":"options","linearOptions":"options","emptyResults":"options","filterRegExp":"options","onHide":"options","onShow":"options","computeDropup":"options","getOptionsMap":"options","optionMatch":"options","textMatch":"options","select":"options","selectAll":"options","selectNone":"options","toggle":"options","stopClick":"options","validateOpions":"options","getDefaultValue":"options","myOptions":"setup"}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/components/AdvancedSelect.vue?vue&type=template&id=ddcedce0&scoped=true&bindings={"value":"props","multiple":"props","search":"props","remote":"props","controls":"props","collapseHeaders":"props","displayMax":"props","displayText":"props","dropdownClass":"props","options":"props","texts":"props","myValue":"data","filter":"data","dropup":"data","isOpen":"data","collapsed":"data","listId":"options","values":"options","valuesText":"options","optionsMap":"options","selected":"options","filtered":"options","linearOptions":"options","emptyResults":"options","filterRegExp":"options","onHide":"options","onShow":"options","computeDropup":"options","getOptionsMap":"options","optionMatch":"options","textMatch":"options","select":"options","selectAll":"options","selectNone":"options","toggle":"options","stopClick":"options","validateOpions":"options","getDefaultValue":"options","myOptions":"setup"}
 
 
 
@@ -4265,9 +4265,9 @@ function _defineProperty(obj, key, value) {
 
 
 
-var _withId = /*#__PURE__*/Object(external_vue_["withScopeId"])("data-v-1d1f2842");
+var _withId = /*#__PURE__*/Object(external_vue_["withScopeId"])("data-v-ddcedce0");
 
-Object(external_vue_["pushScopeId"])("data-v-1d1f2842");
+Object(external_vue_["pushScopeId"])("data-v-ddcedce0");
 
 var _hoisted_1 = /*#__PURE__*/Object(external_vue_["createTextVNode"])("  ");
 
@@ -4300,7 +4300,7 @@ var _hoisted_8 = {
 
 Object(external_vue_["popScopeId"])();
 
-var AdvancedSelectvue_type_template_id_1d1f2842_scoped_true_bindings_value_props_multiple_props_search_props_remote_props_controls_props_collapseHeaders_props_displayMax_props_displayText_props_dropdownClass_props_options_props_texts_props_myValue_data_filter_data_dropup_data_isOpen_data_collapsed_data_listId_options_values_options_valuesText_options_optionsMap_options_selected_options_filtered_options_linearOptions_options_emptyResults_options_filterRegExp_options_onHide_options_onShow_options_computeDropup_options_getOptionsMap_options_optionMatch_options_textMatch_options_select_options_selectAll_options_selectNone_options_toggle_options_stopClick_options_validateOpions_options_getDefaultValue_options_myOptions_setup_render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup, $data, $options) {
+var AdvancedSelectvue_type_template_id_ddcedce0_scoped_true_bindings_value_props_multiple_props_search_props_remote_props_controls_props_collapseHeaders_props_displayMax_props_displayText_props_dropdownClass_props_options_props_texts_props_myValue_data_filter_data_dropup_data_isOpen_data_collapsed_data_listId_options_values_options_valuesText_options_optionsMap_options_selected_options_filtered_options_linearOptions_options_emptyResults_options_filterRegExp_options_onHide_options_onShow_options_computeDropup_options_getOptionsMap_options_optionMatch_options_textMatch_options_select_options_selectAll_options_selectNone_options_toggle_options_stopClick_options_validateOpions_options_getDefaultValue_options_myOptions_setup_render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _class;
 
   return Object(external_vue_["openBlock"])(), Object(external_vue_["createBlock"])("div", {
@@ -4309,10 +4309,15 @@ var AdvancedSelectvue_type_template_id_1d1f2842_scoped_true_bindings_value_props
     }, _defineProperty(_class, _ctx.$style['btn-group'], true), _defineProperty(_class, 'btn-group', true), _defineProperty(_class, "open", $data.isOpen), _class)
   }, [Object(external_vue_["createVNode"])("button", Object(external_vue_["mergeProps"])({
     type: "button",
-    class: "btn btn-default dropdown-toggle",
+    class: [{
+      'is-multiple': $props.multiple,
+      'is-controls': $props.controls,
+      'is-search': $props.search,
+      'is-remote': $props.remote
+    }, "btn btn-default dropdown-toggle"],
+    "aria-expanded": $data.isOpen ? 'true' : 'false',
     "data-toggle": "dropdown",
-    "aria-haspopup": "true",
-    "aria-expanded": "false"
+    "aria-haspopup": "true"
   }, _ctx.$attrs, {
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.computeDropup.apply($options, arguments);
@@ -4323,7 +4328,7 @@ var AdvancedSelectvue_type_template_id_1d1f2842_scoped_true_bindings_value_props
   }, null, 8, ["innerHTML"])) : (Object(external_vue_["openBlock"])(), Object(external_vue_["createBlock"])("span", {
     key: 1,
     class: _ctx.$style.placeholder
-  }, Object(external_vue_["toDisplayString"])($props.texts.placeholder), 3)), _hoisted_1, _hoisted_2], 16), Object(external_vue_["createVNode"])("ul", {
+  }, Object(external_vue_["toDisplayString"])($props.texts.placeholder), 3)), _hoisted_1, _hoisted_2], 16, ["aria-expanded"]), Object(external_vue_["createVNode"])("ul", {
     role: "list",
     id: $options.listId,
     class: [_ctx.$style['dropdown-menu'], 'dropdown-menu', $props.dropdownClass]
@@ -4412,7 +4417,7 @@ var AdvancedSelectvue_type_template_id_1d1f2842_scoped_true_bindings_value_props
   /* KEYED_FRAGMENT */
   ))], 2)]))], 10, ["id"])], 2);
 });
-// CONCATENATED MODULE: ./src/components/AdvancedSelect.vue?vue&type=template&id=1d1f2842&scoped=true&bindings={"value":"props","multiple":"props","search":"props","remote":"props","controls":"props","collapseHeaders":"props","displayMax":"props","displayText":"props","dropdownClass":"props","options":"props","texts":"props","myValue":"data","filter":"data","dropup":"data","isOpen":"data","collapsed":"data","listId":"options","values":"options","valuesText":"options","optionsMap":"options","selected":"options","filtered":"options","linearOptions":"options","emptyResults":"options","filterRegExp":"options","onHide":"options","onShow":"options","computeDropup":"options","getOptionsMap":"options","optionMatch":"options","textMatch":"options","select":"options","selectAll":"options","selectNone":"options","toggle":"options","stopClick":"options","validateOpions":"options","getDefaultValue":"options","myOptions":"setup"}
+// CONCATENATED MODULE: ./src/components/AdvancedSelect.vue?vue&type=template&id=ddcedce0&scoped=true&bindings={"value":"props","multiple":"props","search":"props","remote":"props","controls":"props","collapseHeaders":"props","displayMax":"props","displayText":"props","dropdownClass":"props","options":"props","texts":"props","myValue":"data","filter":"data","dropup":"data","isOpen":"data","collapsed":"data","listId":"options","values":"options","valuesText":"options","optionsMap":"options","selected":"options","filtered":"options","linearOptions":"options","emptyResults":"options","filterRegExp":"options","onHide":"options","onShow":"options","computeDropup":"options","getOptionsMap":"options","optionMatch":"options","textMatch":"options","select":"options","selectAll":"options","selectNone":"options","toggle":"options","stopClick":"options","validateOpions":"options","getDefaultValue":"options","myOptions":"setup"}
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.join.js
 var es_array_join = __webpack_require__("a15b");
@@ -4978,8 +4983,8 @@ var getOptionsFromDefaultSlot = function getOptionsFromDefaultSlot(slots) {
 // EXTERNAL MODULE: ./src/components/AdvancedSelect.vue?vue&type=style&index=0&lang=less&module=true
 var AdvancedSelectvue_type_style_index_0_lang_less_module_true = __webpack_require__("abb4");
 
-// EXTERNAL MODULE: ./src/components/AdvancedSelect.vue?vue&type=style&index=1&id=1d1f2842&scoped=true&lang=css
-var AdvancedSelectvue_type_style_index_1_id_1d1f2842_scoped_true_lang_css = __webpack_require__("cc4d");
+// EXTERNAL MODULE: ./src/components/AdvancedSelect.vue?vue&type=style&index=1&id=ddcedce0&scoped=true&lang=css
+var AdvancedSelectvue_type_style_index_1_id_ddcedce0_scoped_true_lang_css = __webpack_require__("caab");
 
 // CONCATENATED MODULE: ./src/components/AdvancedSelect.vue
 
@@ -4990,8 +4995,8 @@ const cssModules = AdvancedSelectvue_type_script_lang_js.__cssModules = {}
 
 cssModules["$style"] = AdvancedSelectvue_type_style_index_0_lang_less_module_true["default"]
 
-AdvancedSelectvue_type_script_lang_js.render = AdvancedSelectvue_type_template_id_1d1f2842_scoped_true_bindings_value_props_multiple_props_search_props_remote_props_controls_props_collapseHeaders_props_displayMax_props_displayText_props_dropdownClass_props_options_props_texts_props_myValue_data_filter_data_dropup_data_isOpen_data_collapsed_data_listId_options_values_options_valuesText_options_optionsMap_options_selected_options_filtered_options_linearOptions_options_emptyResults_options_filterRegExp_options_onHide_options_onShow_options_computeDropup_options_getOptionsMap_options_optionMatch_options_textMatch_options_select_options_selectAll_options_selectNone_options_toggle_options_stopClick_options_validateOpions_options_getDefaultValue_options_myOptions_setup_render
-AdvancedSelectvue_type_script_lang_js.__scopeId = "data-v-1d1f2842"
+AdvancedSelectvue_type_script_lang_js.render = AdvancedSelectvue_type_template_id_ddcedce0_scoped_true_bindings_value_props_multiple_props_search_props_remote_props_controls_props_collapseHeaders_props_displayMax_props_displayText_props_dropdownClass_props_options_props_texts_props_myValue_data_filter_data_dropup_data_isOpen_data_collapsed_data_listId_options_values_options_valuesText_options_optionsMap_options_selected_options_filtered_options_linearOptions_options_emptyResults_options_filterRegExp_options_onHide_options_onShow_options_computeDropup_options_getOptionsMap_options_optionMatch_options_textMatch_options_select_options_selectAll_options_selectNone_options_toggle_options_stopClick_options_validateOpions_options_getDefaultValue_options_myOptions_setup_render
+AdvancedSelectvue_type_script_lang_js.__scopeId = "data-v-ddcedce0"
 
 /* harmony default export */ var AdvancedSelect = (AdvancedSelectvue_type_script_lang_js);
 // CONCATENATED MODULE: ./src/components/entry.js
