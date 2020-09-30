@@ -70,21 +70,6 @@ jobs:
           paths:
             - example
             - node_modules
-            - .firebaserc
-            - firebase.json
-
-  deploy:
-    docker:
-      - image: circleci/node:14.7.0
-
-    working_directory: ~/repo
-
-    steps:
-      - restore_cache:
-          key: v1-build-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Deploy Master to Firebase
-          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
 workflows:
   version: 2
@@ -98,10 +83,3 @@ workflows:
       - build:
           requires:
             - install
-      - deploy:
-          requires:
-            - test
-            - build
-          filters:
-            branches:
-              only: master
