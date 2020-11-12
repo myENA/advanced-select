@@ -485,10 +485,10 @@ export default {
     selectAll() {
       // when selecting all, concatenate the exiting selected values
       // with the currently filtered ones
-      this.myValue = [].concat(
+      this.myValue = [... new Set([].concat(
         this.myValue || [],
         this.filtered.filter(o => !o.header && !o.disabled).map(o => o.value)
-      );
+      ))];
     },
     selectNone() {
       this.myValue = [];
