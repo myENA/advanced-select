@@ -456,7 +456,7 @@ export default {
     optionMatch(o) {
       const isNotCollapsed = (!o.parentHeader || !this.collapsed[o.parentHeader]);
       const textMatches = this.textMatch(o.text || o.header);
-      const subtextMatches = o.subtext ? this.textMatch(o.subtext) : true;
+      const subtextMatches = o.subtext ? this.textMatch(o.subtext) : false;
 
       return isNotCollapsed && (this.remote || textMatches || subtextMatches);
     },
