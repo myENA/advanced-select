@@ -98,7 +98,7 @@
               <small
                 v-if="option.subtext"
                 class="text-muted">
-                &mdash; {{option.subtext}}
+                <span> &mdash; </span> {{option.subtext}}
               </small>
               <i v-if="multiple"
                 class="glyphicon"
