@@ -296,7 +296,7 @@ describe('AdvancedSelect.vue', () => {
       const wrapper = shallowMount(Select, {
         propsData: {
           options: [
-            { text: 'Option 1', value: 1 },
+            { text: 'Option 1', value: 1, subtext: 'Option 1 subtext' },
             { text: 'Option 2', value: 2 },
             {
               label: 'Group',
@@ -317,7 +317,7 @@ describe('AdvancedSelect.vue', () => {
         filter: 'opt',
       });
       expect(wrapper.vm.filtered).to.deep.equal([
-        { text: 'Option 1', value: 1 },
+        { text: 'Option 1', value: 1, subtext: 'Option 1 subtext' },
         { text: 'Option 2', value: 2 },
       ]);
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(2);
@@ -330,6 +330,12 @@ describe('AdvancedSelect.vue', () => {
         { parentHeader: 'Group', text: 'Another 5', value: 5 },
       ]);
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(3);
+      wrapper.setData({
+        filter: 'subtext',
+      });
+      expect(wrapper.vm.filtered).to.deep.equal([
+        { text: 'Option 1', value: 1, subtext: 'Option 1 subtext' },
+      ]);
     });
   });
 });

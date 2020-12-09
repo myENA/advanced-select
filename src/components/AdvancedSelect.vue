@@ -95,6 +95,11 @@
               href="#" @click="select($event, option.value)">
               <i v-if="option.icon" :class="['fa', 'pos-rel', option.icon]"/>
               {{option.text}}
+              <small
+                v-if="option.subtext"
+                class="text-muted">
+                <span> &mdash; </span> {{option.subtext}}
+              </small>
               <i v-if="multiple"
                 class="glyphicon"
                 :class="{ 'glyphicon-ok': !!selected[option.value] }">
@@ -451,8 +456,9 @@ export default {
     optionMatch(o) {
       const isNotCollapsed = (!o.parentHeader || !this.collapsed[o.parentHeader]);
       const textMatches = this.textMatch(o.text || o.header);
+      const subtextMatches = o.subtext ? this.textMatch(o.subtext) : false;
 
-      return isNotCollapsed && (this.remote || textMatches);
+      return isNotCollapsed && (this.remote || textMatches || subtextMatches);
     },
     textMatch(text) {
       return text ? text.match(this.filterRegExp) !== null : true;
