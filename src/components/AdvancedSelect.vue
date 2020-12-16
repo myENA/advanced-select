@@ -389,7 +389,8 @@ export default {
       return this.search && this.filtered.length === 0 && this.filter;
     },
     filterRegExp() {
-      return new RegExp(`${this.filter}`, 'ig');
+      const string = this.filter.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      return new RegExp(`${string}`, 'ig');
     },
   },
   watch: {
