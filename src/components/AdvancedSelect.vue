@@ -63,7 +63,7 @@
           :class="[$style['dropdown-menu'], 'dropdown-menu', $style.items]"
           >
           <li
-            v-for="option in showList"
+            v-for="option in filtered"
             :key="option.value || option.header"
             :data-value="option.value"
             :class="{
@@ -320,7 +320,6 @@ export default {
       dropup: false,
       isOpen: false,
       collapsed: {},
-      showList: [],
     };
   },
   computed: {
@@ -366,7 +365,10 @@ export default {
      * Create a list of the filtered options; i.e. those that match the search
      */
     filtered() {
-      return this.linearOptions.filter(this.optionMatch);
+      if (this.isOpen) {
+        return this.linearOptions.filter(this.optionMatch);
+      }
+      return [];
     },
     /**
      * Create a linear list of all the options (headers included)
@@ -435,14 +437,12 @@ export default {
     $(this.$el).on('hidden.bs.dropdown', () => {
       this.isOpen = false;
       this.filter = '';
-      this.showList = [];
     });
     $(this.$el).on('shown.bs.dropdown', () => {
       this.isOpen = true;
       if (this.search) {
         $(`.${this.$style.search} input`, this.$el).focus();
       }
-      this.showList = this.filtered;
     });
   },
   methods: {
