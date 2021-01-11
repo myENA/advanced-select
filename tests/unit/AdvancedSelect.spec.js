@@ -17,6 +17,11 @@ describe('AdvancedSelect.vue', () => {
         propsData: {
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(2);
     });
@@ -34,6 +39,11 @@ describe('AdvancedSelect.vue', () => {
             },
           ],
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(3);
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li')).to.have.lengthOf(4);
@@ -114,6 +124,11 @@ describe('AdvancedSelect.vue', () => {
             { text: '3', value: 3, disabled: true },
           ],
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li.disabled').length).to.equal(2);
     });
@@ -137,6 +152,11 @@ describe('AdvancedSelect.vue', () => {
         propsData: {
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       expect(wrapper.vm.myValue).to.equal(null);
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
@@ -159,6 +179,11 @@ describe('AdvancedSelect.vue', () => {
             },
           ],
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       expect(wrapper.vm.myValue).to.equal(null);
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
@@ -173,6 +198,11 @@ describe('AdvancedSelect.vue', () => {
           multiple: true,
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       expect(wrapper.vm.myValue).to.deep.equal([]);
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
@@ -186,6 +216,11 @@ describe('AdvancedSelect.vue', () => {
         propsData: {
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(0).trigger('click');
@@ -198,6 +233,11 @@ describe('AdvancedSelect.vue', () => {
           multiple: true,
           options: [{ text: '1', value: 1 }, { text: '2', value: 2 }],
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(0).trigger('click');
@@ -215,6 +255,11 @@ describe('AdvancedSelect.vue', () => {
             { text: '2', value: 2, disabled: true },
           ],
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
       links.at(1).trigger('click');
@@ -239,6 +284,11 @@ describe('AdvancedSelect.vue', () => {
           multiple: true,
           controls: true,
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
       links.at(0).trigger('click');
@@ -263,6 +313,11 @@ describe('AdvancedSelect.vue', () => {
           multiple: true,
           controls: true,
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       const links = wrapper.findAll('div.btn-group > ul > li .btn-group button');
       links.at(0).trigger('click');
@@ -311,6 +366,11 @@ describe('AdvancedSelect.vue', () => {
           search: true,
           controls: true,
         },
+        data() {
+          return {
+            isOpen: true
+          }
+        }
       });
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(5);
       wrapper.setData({
