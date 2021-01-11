@@ -63,7 +63,7 @@
           :class="[$style['dropdown-menu'], 'dropdown-menu', $style.items]"
           >
           <li
-            v-for="option in filtered"
+            v-for="option in showList"
             :key="option.value || option.header"
             :data-value="option.value"
             :class="{
@@ -320,6 +320,7 @@ export default {
       dropup: false,
       isOpen: false,
       collapsed: {},
+      showList: [],
     };
   },
   computed: {
@@ -434,12 +435,14 @@ export default {
     $(this.$el).on('hidden.bs.dropdown', () => {
       this.isOpen = false;
       this.filter = '';
+      this.showList = [];
     });
     $(this.$el).on('shown.bs.dropdown', () => {
       this.isOpen = true;
       if (this.search) {
         $(`.${this.$style.search} input`, this.$el).focus();
       }
+      this.showList = this.filtered;
     });
   },
   methods: {
