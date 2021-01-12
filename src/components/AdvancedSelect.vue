@@ -380,7 +380,7 @@ export default {
           f.push(...o.options.map(opt => Object.assign(opt, { parentHeader: o.label, selected: this.valueIsSelected(o.value) })));
         } else {
           // it's an item without group, push it to the list
-          f.push({...o, selected: this.valueIsSelected(o.value)});
+          f.push(Object.assign(o, { selected: this.valueIsSelected(o.value) }));
         }
         return f;
       }, []);
