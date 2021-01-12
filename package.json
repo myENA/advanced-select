@@ -2,7 +2,7 @@
   "name": "@myena/advanced-select",
   "description": "Vue Advanced Select control used in ENA projects",
   "libname": "MyEna",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "repository": "github:myENA/advanced-select",
   "keywords": [
     "vue",
