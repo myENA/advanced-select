@@ -317,24 +317,24 @@ describe('AdvancedSelect.vue', () => {
         filter: 'opt',
       });
       expect(wrapper.vm.filtered).to.deep.equal([
-        { text: 'Option 1', value: 1, subtext: 'Option 1 subtext' },
-        { text: 'Option 2', value: 2 },
+        { text: 'Option 1', value: 1, subtext: 'Option 1 subtext', selected: false },
+        { text: 'Option 2', value: 2, selected: false},
       ]);
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(2);
       wrapper.setData({
         filter: 'anot',
       });
       expect(wrapper.vm.filtered).to.deep.equal([
-        { parentHeader: 'Group', text: 'Another 3', value: 3 },
-        { parentHeader: 'Group', text: 'Another 4', value: 4 },
-        { parentHeader: 'Group', text: 'Another 5', value: 5 },
+        { parentHeader: 'Group', text: 'Another 3', value: 3, selected: false },
+        { parentHeader: 'Group', text: 'Another 4', value: 4, selected: false },
+        { parentHeader: 'Group', text: 'Another 5', value: 5, selected: false },
       ]);
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(3);
       wrapper.setData({
         filter: 'subtext',
       });
       expect(wrapper.vm.filtered).to.deep.equal([
-        { text: 'Option 1', value: 1, subtext: 'Option 1 subtext' },
+        { text: 'Option 1', value: 1, subtext: 'Option 1 subtext', selected: false },
       ]);
     });
   });

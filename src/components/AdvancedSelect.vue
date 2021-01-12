@@ -68,8 +68,8 @@
             :data-value="option.value"
             :class="{
               'dropdown-header': option.header,
-              active: !multiple && !!selected[option.value],
-            disabled: option.disabled,
+              active: !multiple && option.selected,
+              disabled: option.disabled,
               'has-header': !!option.parentHeader,
             }">
             <span
@@ -102,7 +102,7 @@
               </small>
               <i v-if="multiple"
                 class="glyphicon"
-                :class="{ 'glyphicon-ok': !!selected[option.value] }">
+                :class="{ 'glyphicon-ok': option.selected}">
               </i>
             </a>
           </li>
@@ -377,10 +377,10 @@ export default {
           f.push({
             header: o.label,
           });
-          f.push(...o.options.map(opt => Object.assign(opt, { parentHeader: o.label })));
+          f.push(...o.options.map(opt => Object.assign(opt, { parentHeader: o.label, selected: this.valueIsSelected(o.value) })));
         } else {
           // it's an item without group, push it to the list
-          f.push(o);
+          f.push({...o, selected: this.valueIsSelected(o.value)});
         }
         return f;
       }, []);
@@ -443,6 +443,15 @@ export default {
     });
   },
   methods: {
+    valueIsSelected(value) {
+      if (!this.value) {
+        return false;
+      }
+      if (this.multiple) {
+        return this.value.indexOf(value) > -1;
+      }
+      return this.value === value;
+    },
     computeDropup() {
       this.dropup = !inView.is(this.$el);
     },
