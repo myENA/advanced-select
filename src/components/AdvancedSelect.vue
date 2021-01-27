@@ -377,10 +377,10 @@ export default {
           f.push({
             header: o.label,
           });
-          f.push(...o.options.map(opt => Object.assign(opt, { parentHeader: o.label, selected: this.valueIsSelected(o.value) })));
+          f.push(...o.options.map(opt => Object.assign({}, opt, { parentHeader: o.label, selected: this.valueIsSelected(o.value) })));
         } else {
           // it's an item without group, push it to the list
-          f.push(Object.assign(o, { selected: this.valueIsSelected(o.value) }));
+          f.push(Object.assign({}, o, { selected: this.valueIsSelected(o.value) }));
         }
         return f;
       }, []);
@@ -501,7 +501,7 @@ export default {
     selectAll() {
       // when selecting all, concatenate the exiting selected values
       // with the currently filtered ones
-      this.myValue = [... new Set([].concat(
+      this.myValue = [...new Set([].concat(
         this.myValue || [],
         this.filtered.filter(o => !o.header && !o.disabled).map(o => o.value)
       ))];
