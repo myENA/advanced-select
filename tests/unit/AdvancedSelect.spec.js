@@ -145,6 +145,18 @@ describe('AdvancedSelect.vue', () => {
       links.at(1).trigger('click');
       expect(wrapper.vm.myValue).to.equal(2);
     });
+    it('Original options list is not mutated', () => {
+      const options = [{ text: '1', value: 1 }, { text: '2', value: 2 }];
+      const wrapper = shallowMount(Select, {
+        propsData: {
+          options,
+        },
+      });
+      const links = wrapper.findAll('div.btn-group > ul > li > ul > li > a');
+      links.at(0).trigger('click');
+      links.at(1).trigger('click');
+      expect(options).to.deep.eq([{ text: '1', value: 1 }, { text: '2', value: 2 }]);
+    });
     it('Value is set on grouped items', () => {
       const wrapper = shallowMount(Select, {
         propsData: {
@@ -318,7 +330,7 @@ describe('AdvancedSelect.vue', () => {
       });
       expect(wrapper.vm.filtered).to.deep.equal([
         { text: 'Option 1', value: 1, subtext: 'Option 1 subtext', selected: false },
-        { text: 'Option 2', value: 2, selected: false},
+        { text: 'Option 2', value: 2, selected: false },
       ]);
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a')).to.have.lengthOf(2);
       wrapper.setData({
