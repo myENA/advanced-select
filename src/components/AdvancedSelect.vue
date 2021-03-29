@@ -218,6 +218,7 @@
 <script type="text/javascript">
 import $ from 'jquery';
 import inView from 'in-view';
+import { clone } from 'ramda';
 
 inView.offset({
   top: 0,
@@ -365,25 +366,13 @@ export default {
      * Create a list of the filtered options; i.e. those that match the search
      */
     filtered() {
-      return this.linearOptions.filter(this.optionMatch);
+      return this.get_linear_options(this.filter_options(this.options));
     },
     /**
      * Create a linear list of all the options (headers included)
      */
     linearOptions() {
-      return this.options.reduce((f, o) => {
-        if (o.options) {
-          // push the header
-          f.push({
-            header: o.label,
-          });
-          f.push(...o.options.map(opt => Object.assign({}, opt, { parentHeader: o.label, selected: this.valueIsSelected(o.value) })));
-        } else {
-          // it's an item without group, push it to the list
-          f.push(Object.assign({}, o, { selected: this.valueIsSelected(o.value) }));
-        }
-        return f;
-      }, []);
+      return this.get_linear_options(this.options);
     },
     emptyResults() {
       return this.search && this.filtered.length === 0 && this.filter;
@@ -533,6 +522,34 @@ export default {
         return [];
       }
       return null;
+    },
+    filter_options(options) {
+      return clone(options).filter(this.recursive_match);
+    },
+    get_linear_options(options) {
+      return options.reduce((f, o) => {
+        if (o.options) {
+          // push the header
+          f.push({
+            header: o.label,
+          });
+          f.push(...o.options.map(opt => Object.assign({}, opt, { parentHeader: o.label, selected: this.valueIsSelected(o.value) })));
+        } else {
+          // it's an item without group, push it to the list
+          f.push(Object.assign({}, o, { selected: this.valueIsSelected(o.value) }));
+        }
+        return f;
+      }, []);
+    },
+    recursive_match(o) {
+      if (this.textMatch(o.text || o.label)) {
+        return true;
+      }
+
+      if (o.options) {
+        return (o.options = o.options.filter(this.recursive_match)).length;
+      }
+      return false;
     },
   },
 };
