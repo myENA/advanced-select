@@ -454,7 +454,7 @@ export default {
     },
     optionMatch(o) {
       const isNotCollapsed = (!o.parentHeader || !this.collapsed[o.parentHeader]);
-      const textMatches = this.textMatch(o.text || o.header);
+      const textMatches = this.textMatch(o.text || o.header || o.label);
       const subtextMatches = o.subtext ? this.textMatch(o.subtext) : false;
 
       return isNotCollapsed && (this.remote || textMatches || subtextMatches);
@@ -542,7 +542,7 @@ export default {
       }, []);
     },
     recursive_match(o) {
-      if (this.textMatch(o.text || o.label)) {
+      if (this.optionMatch(o)) {
         return true;
       }
 
