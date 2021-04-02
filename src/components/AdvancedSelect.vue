@@ -342,7 +342,7 @@ export default {
     optionsMap() {
       // For the optionsMap, use all options, not just the filtered ones
       // so that selecting values searches entire list
-      return this.getOptionsMap(this.linearOptions);
+      return this.getOptionsMap(this.getLinearOptions(this.options));
     },
     selected() {
       let selected = {};
@@ -366,13 +366,7 @@ export default {
      * Create a list of the filtered options; i.e. those that match the search
      */
     filtered() {
-      return this.get_linear_options(this.filter_options(this.options));
-    },
-    /**
-     * Create a linear list of all the options (headers included)
-     */
-    linearOptions() {
-      return this.get_linear_options(this.options);
+      return this.getLinearOptions(this.filterOptions(this.options));
     },
     emptyResults() {
       return this.search && this.filtered.length === 0 && this.filter;
@@ -523,33 +517,39 @@ export default {
       }
       return null;
     },
-    filter_options(options) {
-      return clone(options).filter(this.recursive_match);
+    filterOptions(options) {
+      return options.reduce((acc, o) => {
+        const groupMatch = this.optionMatch(o);
+        if (groupMatch) {
+          acc.push(o);
+        }
+        if (!groupMatch && o.options) {
+          const matches = o.options.filter(this.optionMatch);
+          if (matches.length > 0) {
+            acc.push({
+              label: o.label,
+              options: matches,
+            });
+          }
+        }
+        return acc;
+      }, []);
     },
-    get_linear_options(options) {
+    getLinearOptions(options) {
       return options.reduce((f, o) => {
         if (o.options) {
           // push the header
           f.push({
             header: o.label,
           });
-          f.push(...o.options.map(opt => Object.assign({}, opt, { parentHeader: o.label, selected: this.valueIsSelected(o.value) })));
+          f.push(...o.options.map(opt => Object.assign({}, opt, { parentHeader: o.label,
+            selected: this.valueIsSelected(o.value) })));
         } else {
           // it's an item without group, push it to the list
           f.push(Object.assign({}, o, { selected: this.valueIsSelected(o.value) }));
         }
         return f;
       }, []);
-    },
-    recursive_match(o) {
-      if (this.optionMatch(o)) {
-        return true;
-      }
-
-      if (o.options) {
-        return (o.options = o.options.filter(this.recursive_match)).length;
-      }
-      return false;
     },
   },
 };
