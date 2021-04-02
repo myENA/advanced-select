@@ -46,7 +46,13 @@
         </div>
       </li>
       <li v-if="search" :class="$style.search">
-        <input class="form-control" v-model="filter" aria-label="Search" placeholder="Search" autofocus="autofocus" />
+        <input
+          class="form-control"
+          v-model="filter"
+          aria-label="Search"
+          placeholder="Search"
+          autofocus="autofocus"
+        />
       </li>
       <li v-if="search && !filter && remote" :class="$style.empty">
         <span class="text-muted">
@@ -86,14 +92,18 @@
                   :class="{
                     'glyphicon-chevron-down': !collapsed[option.header],
                     'glyphicon-chevron-right': collapsed[option.header],
-                  }">
+                  }"
+                  aria-hidden="true"
+                  >
                 </i>
               </a>
             </span>
             <a v-else
               :title="option.text"
               href="#" @click="select($event, option.value)">
-              <i v-if="option.icon" :class="['fa', 'pos-rel', option.icon]"/>
+              <i
+                v-if="option.icon" :class="['fa', 'pos-rel', option.icon]"
+                aria-hidden="true"/>
               {{option.text}}
               <small
                 v-if="option.subtext"
@@ -102,7 +112,8 @@
               </small>
               <i v-if="multiple"
                 class="glyphicon"
-                :class="{ 'glyphicon-ok': option.selected}">
+                :class="{ 'glyphicon-ok': option.selected}"
+                aria-hidden="true">
               </i>
             </a>
           </li>
@@ -218,6 +229,7 @@
 <script type="text/javascript">
 import $ from 'jquery';
 import inView from 'in-view';
+import { ref, watch, isVue2 } from 'vue-demi';
 
 inView.offset({
   top: 0,
@@ -241,26 +253,39 @@ const escapeTextSafe = (nonEscapedText) => {
   return text;
 };
 
-function getOptionsFromVNodes(vnodes) {
-  return vnodes.reduce((opts, vnode) => {
-    if (vnode.tag === 'option') {
-      // node is an option
-      opts.push({ text: vnode.children[0].text, ...vnode.data.attrs, ...vnode.data.domProps });
-    } else if (vnode.tag === 'optgroup') {
-      opts.push({ options: getOptionsFromVNodes(vnode.children), ...vnode.data.attrs, ...vnode.data.domProps });
-    } else {
-      // ignore all the rest
-    }
-    return opts;
-  }, []);
-}
+const getOptionsFromVNodes = (vnodes) => vnodes.reduce((opts, vnode) => {
+  if (vnode.type === 'option') {
+    // node is an option
+    opts.push({
+      text: vnode.children,
+      ...vnode.props,
+    });
+  } else {
+    // ignore all the rest, but warn that it's not supported
+    console.warn('Passing in default slot anything else than a list of <option> tags is not supported');
+  }
+  return opts;
+}, []);
+
+const getOptionsFromDefaultSlot = (slots) => {
+  if (!slots.default) {
+    return [];
+  }
+  return getOptionsFromVNodes(slots.default());
+};
 
 export default {
   inheritAttrs: false,
   props: {
-    value: {
-      default: null,
-    },
+    ...(isVue2 ? {
+      value: {
+        default: null,
+      },
+    } : {
+      modelValue: {
+        default: null,
+      },
+    }),
     multiple: {
       default: false,
       type: Boolean,
@@ -294,12 +319,7 @@ export default {
       type: String,
     },
     options: {
-      default() {
-        if (this.$slots.default) {
-          return getOptionsFromVNodes(this.$slots.default);
-        }
-        return [];
-      },
+      default: () => ([]),
       type: Array,
     },
     texts: {
@@ -330,7 +350,7 @@ export default {
       return null;
     },
     values() {
-      return Object.values(this.selected).map(o => (o.icon ? `<i class="fa ${o.icon}"></i> ${o.text}` : o.text));
+      return Object.values(this.selected).map((o) => (o.icon ? `<i class="fa ${o.icon}"></i> ${o.text}` : o.text));
     },
     valuesText() {
       if (this.displayMax && this.displayMax < this.values.length) {
@@ -341,7 +361,7 @@ export default {
     optionsMap() {
       // For the optionsMap, use all options, not just the filtered ones
       // so that selecting values searches entire list
-      return this.getOptionsMap(this.getLinearOptions(this.options));
+      return this.getOptionsMap(this.getLinearOptions(this.myOptions));
     },
     selected() {
       let selected = {};
@@ -365,7 +385,7 @@ export default {
      * Create a list of the filtered options; i.e. those that match the search
      */
     filtered() {
-      return this.getLinearOptions(this.filterOptions(this.options));
+      return this.getLinearOptions(this.filterOptions(this.myOptions));
     },
     emptyResults() {
       return this.search && this.filtered.length === 0 && this.filter;
@@ -378,18 +398,26 @@ export default {
   watch: {
     myValue(newVal) {
       // emit the change event with the new value
-      this.$emit('input', newVal);
+      if (isVue2) {
+        this.$emit('input', newVal);
+      } else {
+        this.$emit('update:modelValue', newVal);
+      }
+    },
+    modelValue(value) {
+      this.myValue = value;
     },
     value(value) {
       this.myValue = value;
     },
-    options: {
+    myOptions: {
       immediate: true,
       handler() {
-        this.validateOpions(this.options);
-        this.collapsed = this.options.reduce((f, o) => {
+        this.validateOpions(this.myOptions);
+        this.collapsed = this.myOptions.reduce((f, o) => {
           if (o.options) {
             // has header, set it as collapsed by default, if collapse is enabled
+            // eslint-disable-next-line no-param-reassign
             f[o.label] = this.collapseHeaders;
           }
           return f;
@@ -413,26 +441,28 @@ export default {
         ticking = true;
       }
     });
-    $(this.$el).on('hidden.bs.dropdown', () => {
+    $(this.$el).on('hidden.bs.dropdown', this.onHide);
+    $(this.$el).on('shown.bs.dropdown', this.onShow);
+  },
+  methods: {
+    onHide() {
       this.isOpen = false;
       this.filter = '';
-    });
-    $(this.$el).on('shown.bs.dropdown', () => {
+    },
+    onShow() {
       this.isOpen = true;
       if (this.search) {
         $(`.${this.$style.search} input`, this.$el).focus();
       }
-    });
-  },
-  methods: {
+    },
     valueIsSelected(value) {
-      if (!this.value) {
+      if (!this.myValue) {
         return false;
       }
       if (this.multiple) {
-        return this.value.indexOf(value) > -1;
+        return this.myValue.indexOf(value) > -1;
       }
-      return this.value === value;
+      return this.myValue === value;
     },
     computeDropup() {
       this.dropup = !inView.is(this.$el);
@@ -466,10 +496,10 @@ export default {
       if (this.multiple) {
         e.stopPropagation();
         // update the new selected items
-        newVal = Object.keys(this.selected).map(k => this.selected[k].value);
+        newVal = Object.keys(this.selected).map((k) => this.selected[k].value);
         if (this.selected[val]) {
           // remove it
-          newVal = newVal.filter(k => k !== val);
+          newVal = newVal.filter((k) => k !== val);
         } else {
           // add it
           newVal.push(val);
@@ -485,7 +515,7 @@ export default {
       // with the currently filtered ones
       this.myValue = [...new Set([].concat(
         this.myValue || [],
-        this.filtered.filter(o => !o.header && !o.disabled).map(o => o.value)
+        this.filtered.filter((o) => !o.header && !o.disabled).map((o) => o.value)
       ))];
     },
     selectNone() {
@@ -508,8 +538,8 @@ export default {
       });
     },
     getDefaultValue() {
-      if (this.value !== null) {
-        return this.value;
+      if (this.modelValue !== null) {
+        return this.modelValue;
       }
       if (this.multiple) {
         return [];
@@ -541,15 +571,29 @@ export default {
           f.push({
             header: o.label,
           });
-          f.push(...o.options.map(opt => Object.assign({}, opt, { parentHeader: o.label,
+          f.push(...o.options.map((opt) => ({ ...opt,
+            parentHeader: o.label,
             selected: this.valueIsSelected(o.value) })));
         } else {
           // it's an item without group, push it to the list
-          f.push(Object.assign({}, o, { selected: this.valueIsSelected(o.value) }));
+          f.push({ ...o, selected: this.valueIsSelected(o.value) });
         }
         return f;
       }, []);
     },
+  },
+  setup(props, ctx) {
+    const options = ref(props.options && props.options.length
+      ? props.options
+      : getOptionsFromDefaultSlot(ctx.slots));
+
+    watch(() => props.options, () => {
+      options.value = props.options;
+    });
+
+    return {
+      myOptions: options,
+    };
   },
 };
 </script>

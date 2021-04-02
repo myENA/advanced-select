@@ -1,11 +1,12 @@
 const webpack = require('webpack');
+const path = require('path');
 const pkg = require('./package.json');
 
 module.exports = {
   css: {
     loaderOptions: {
       css: {
-        localIdentName: `${pkg.libname}[name]_[local]_[hash:base64:5]`,
+        // localIdentName: `${pkg.libname}[name]_[local]_[hash:base64:5]`,
       },
     },
   },
@@ -37,8 +38,24 @@ module.exports = {
         'vue',
       ];
     }
+
     // config parameter can be mutated
     // or a new object (to be used with webpack-merge) returned
     return customConfig;
+  },
+  chainWebpack: (config) => {
+    if (process.env.NODE_ENV === 'test') {
+      config.module
+        .rule('istanbul')
+        .test(/\.(js|vue)$/)
+        .enforce('post')
+        .include
+        .add(path.resolve(__dirname, '/src'))
+        .end()
+        .use('istanbul-instrumenter-loader')
+        .loader('istanbul-instrumenter-loader')
+        .options({ esModules: true })
+        .end();
+    }
   },
 };

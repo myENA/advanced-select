@@ -24,3 +24,5 @@ yarn-error.log*
 example
 .nyc_output/
 coverage/
+test-results.xml
+reports/
