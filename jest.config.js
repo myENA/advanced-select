@@ -16,5 +16,6 @@ module.exports = {
   collectCoverageFrom: [
     'src/components/*.{js,vue}',
     '!**/node_modules/**',
+    '!src/components/entry.js',
   ],
 };
