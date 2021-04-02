@@ -2,7 +2,7 @@
 
 ![CircleCI (all branches)](https://img.shields.io/circleci/project/github/myENA/advanced-select.svg)
 ![npm (scoped)](https://img.shields.io/npm/v/@myena/advanced-select.svg)
-![npm (tag)](https://img.shields.io/npm/v/@myena/advanced-select/alpha)
+![npm (tag)](https://img.shields.io/npm/v/@myena/advanced-select)
 ![](https://img.shields.io/npm/dt/@myena/advanced-select.svg)
 ![NpmLicense](https://img.shields.io/npm/l/@myena/advanced-select.svg)
 ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@myena/advanced-select.svg)
@@ -15,7 +15,7 @@ Component to render a "select" with advanced interactions (search, select/desele
 
 ## Install
 ```
-npm install @myena/advanced-select@alpha
+npm install @myena/advanced-select
 ```
 
 ## Dependencies
