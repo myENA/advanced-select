@@ -573,7 +573,7 @@ export default {
           });
           f.push(...o.options.map((opt) => ({ ...opt,
             parentHeader: o.label,
-            selected: this.valueIsSelected(o.value) })));
+            selected: this.valueIsSelected(opt.value) })));
         } else {
           // it's an item without group, push it to the list
           f.push({ ...o, selected: this.valueIsSelected(o.value) });
