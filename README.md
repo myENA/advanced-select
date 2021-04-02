@@ -20,7 +20,8 @@ npm install @myena/advanced-select@alpha
 
 ## Dependencies
 
-- Vue 3
+- Vue 2*/3
+  - *For Vue 2 it depends on `@vue/composition-api`, via [vue-demi](https://www.npmjs.com/package/vue-demi)
 - Bootstrap 3
 
 ## Demo
