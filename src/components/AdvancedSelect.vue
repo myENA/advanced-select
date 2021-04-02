@@ -218,7 +218,6 @@
 <script type="text/javascript">
 import $ from 'jquery';
 import inView from 'in-view';
-import { clone } from 'ramda';
 
 inView.offset({
   top: 0,
