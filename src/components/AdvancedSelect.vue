@@ -341,7 +341,7 @@ export default {
     optionsMap() {
       // For the optionsMap, use all options, not just the filtered ones
       // so that selecting values searches entire list
-      return this.getOptionsMap(this.linearOptions);
+      return this.getOptionsMap(this.getLinearOptions(this.options));
     },
     selected() {
       let selected = {};
@@ -365,25 +365,7 @@ export default {
      * Create a list of the filtered options; i.e. those that match the search
      */
     filtered() {
-      return this.linearOptions.filter(this.optionMatch);
-    },
-    /**
-     * Create a linear list of all the options (headers included)
-     */
-    linearOptions() {
-      return this.options.reduce((f, o) => {
-        if (o.options) {
-          // push the header
-          f.push({
-            header: o.label,
-          });
-          f.push(...o.options.map(opt => Object.assign({}, opt, { parentHeader: o.label, selected: this.valueIsSelected(o.value) })));
-        } else {
-          // it's an item without group, push it to the list
-          f.push(Object.assign({}, o, { selected: this.valueIsSelected(o.value) }));
-        }
-        return f;
-      }, []);
+      return this.getLinearOptions(this.filterOptions(this.options));
     },
     emptyResults() {
       return this.search && this.filtered.length === 0 && this.filter;
@@ -465,7 +447,7 @@ export default {
     },
     optionMatch(o) {
       const isNotCollapsed = (!o.parentHeader || !this.collapsed[o.parentHeader]);
-      const textMatches = this.textMatch(o.text || o.header);
+      const textMatches = this.textMatch(o.text || o.header || o.label);
       const subtextMatches = o.subtext ? this.textMatch(o.subtext) : false;
 
       return isNotCollapsed && (this.remote || textMatches || subtextMatches);
@@ -533,6 +515,40 @@ export default {
         return [];
       }
       return null;
+    },
+    filterOptions(options) {
+      return options.reduce((acc, o) => {
+        const groupMatch = this.optionMatch(o);
+        if (groupMatch) {
+          acc.push(o);
+        }
+        if (!groupMatch && o.options) {
+          const matches = o.options.filter(this.optionMatch);
+          if (matches.length > 0) {
+            acc.push({
+              label: o.label,
+              options: matches,
+            });
+          }
+        }
+        return acc;
+      }, []);
+    },
+    getLinearOptions(options) {
+      return options.reduce((f, o) => {
+        if (o.options) {
+          // push the header
+          f.push({
+            header: o.label,
+          });
+          f.push(...o.options.map(opt => Object.assign({}, opt, { parentHeader: o.label,
+            selected: this.valueIsSelected(o.value) })));
+        } else {
+          // it's an item without group, push it to the list
+          f.push(Object.assign({}, o, { selected: this.valueIsSelected(o.value) }));
+        }
+        return f;
+      }, []);
     },
   },
 };

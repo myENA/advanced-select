@@ -337,6 +337,7 @@ describe('AdvancedSelect.vue', () => {
         filter: 'anot',
       });
       expect(wrapper.vm.filtered).to.deep.equal([
+        { header: 'Group' },
         { parentHeader: 'Group', text: 'Another 3', value: 3, selected: false },
         { parentHeader: 'Group', text: 'Another 4', value: 4, selected: false },
         { parentHeader: 'Group', text: 'Another 5', value: 5, selected: false },
