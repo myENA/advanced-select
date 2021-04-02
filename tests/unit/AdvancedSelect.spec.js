@@ -12,8 +12,12 @@ describe('AdvancedSelect.vue', () => {
         props: {
           options: [{ text: '1', value: 1 }],
         },
+        attrs: {
+          id: 'myId',
+        },
       });
       expect(wrapper.exists('div.btn-group > button')).toBe(true);
+      expect(wrapper.exists('div.btn-group > ul#myId_ul')).toBe(true);
     });
     it('the passed options', async () => {
       const wrapper = shallowMount(Select, {
@@ -133,6 +137,20 @@ describe('AdvancedSelect.vue', () => {
         },
       });
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li.disabled').length).toBe(2);
+    });
+    it('items with icon', () => {
+      const wrapper = shallowMount(Select, {
+        props: {
+          options: [
+            { text: '1', value: 1 },
+            { text: '2', value: 2, icon: 'fa-check' },
+          ],
+          multiple: true,
+          modelValue: [1, 2],
+        },
+      });
+      expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a > i.fa').length).toBe(1);
+      expect(wrapper.vm.values).toEqual(['1', '<i class="fa fa-check"></i> 2']);
     });
   });
   describe('actions', () => {
