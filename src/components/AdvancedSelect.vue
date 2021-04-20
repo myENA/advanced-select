@@ -538,7 +538,10 @@ export default {
       });
     },
     getDefaultValue() {
-      if (this.modelValue !== null) {
+      if (isVue2 && this.value !== null) {
+        return this.value;
+      }
+      if (!isVue2 && this.modelValue !== null) {
         return this.modelValue;
       }
       if (this.multiple) {
