@@ -538,6 +538,9 @@ export default {
       });
     },
     getDefaultValue() {
+      if (this.value !== null) {
+        return this.value;
+      }
       if (this.modelValue !== null) {
         return this.modelValue;
       }
