@@ -350,7 +350,7 @@ export default {
       return null;
     },
     values() {
-      return Object.values(this.selected).map((o) => (o.icon ? `<i class="fa ${o.icon}"></i> ${o.text}` : o.text));
+      return Object.values(this.selected).map((o) => (o.icon ? `<i class="fa ${o.icon}"></i> ${o.altText || o.text}` : (o.altText || o.text)));
     },
     valuesText() {
       if (this.displayMax && this.displayMax < this.values.length) {
