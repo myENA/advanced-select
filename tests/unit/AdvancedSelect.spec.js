@@ -152,6 +152,19 @@ describe('AdvancedSelect.vue', () => {
       expect(wrapper.findAll('div.btn-group > ul > li > ul > li > a > i.fa').length).toBe(1);
       expect(wrapper.vm.values).toEqual(['1', '<i class="fa fa-check"></i> 2']);
     });
+    it('items with alternative text', () => {
+      const wrapper = shallowMount(Select, {
+        props: {
+          options: [
+            { text: '1', value: 1 },
+            { text: '2', value: 2, altText: '2 - two' },
+          ],
+          multiple: true,
+          modelValue: [1, 2],
+        },
+      });
+      expect(wrapper.vm.values).toEqual(['1', '2 - two']);
+    });
   });
   describe('actions', () => {
     it('Default value is set', async () => {
