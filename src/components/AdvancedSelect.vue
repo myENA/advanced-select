@@ -1,6 +1,7 @@
 <template>
   <div
     :class="{
+      ...$attrs.class,
       dropup,
       [$style['btn-group']]: true,
       'btn-group': true,
@@ -8,6 +9,7 @@
     }"
   >
     <button
+      v-bind="$attrs"
       type="button"
       :class="{
         'is-multiple': multiple,
@@ -19,7 +21,6 @@
       class="btn btn-default dropdown-toggle"
       data-toggle="dropdown"
       aria-haspopup="true"
-      v-bind="$attrs"
       @click="computeDropup">
       <span v-if="values.length" v-html="valuesText"></span>
       <span v-else :class="$style.placeholder">{{texts.placeholder}}</span>
@@ -229,7 +230,7 @@
 <script type="text/javascript">
 import $ from 'jquery';
 import inView from 'in-view';
-import { ref, watch, isVue2 } from 'vue-demi';
+import { ref, watch } from 'vue';
 
 inView.offset({
   top: 0,
@@ -275,17 +276,10 @@ const getOptionsFromDefaultSlot = (slots) => {
 };
 
 export default {
-  inheritAttrs: false,
   props: {
-    ...(isVue2 ? {
-      value: {
-        default: null,
-      },
-    } : {
-      modelValue: {
-        default: null,
-      },
-    }),
+    modelValue: {
+      default: null,
+    },
     multiple: {
       default: false,
       type: Boolean,
@@ -396,22 +390,22 @@ export default {
     },
   },
   watch: {
-    myValue(newVal) {
-      // emit the change event with the new value
-      if (isVue2) {
-        this.$emit('input', newVal);
-      } else {
+    myValue: {
+      handler(newVal) {
+        // emit the change event with the new value
         this.$emit('update:modelValue', newVal);
-      }
+      },
+      deep: true,
     },
-    modelValue(value) {
-      this.myValue = value;
-    },
-    value(value) {
-      this.myValue = value;
+    modelValue: {
+      handler(value) {
+        this.myValue = value;
+      },
+      deep: true,
     },
     myOptions: {
       immediate: true,
+      deep: true,
       handler() {
         this.validateOpions(this.myOptions);
         this.collapsed = this.myOptions.reduce((f, o) => {
@@ -538,10 +532,7 @@ export default {
       });
     },
     getDefaultValue() {
-      if (isVue2 && this.value !== null) {
-        return this.value;
-      }
-      if (!isVue2 && this.modelValue !== null) {
+      if (this.modelValue !== null) {
         return this.modelValue;
       }
       if (this.multiple) {
@@ -592,7 +583,7 @@ export default {
 
     watch(() => props.options, () => {
       options.value = props.options;
-    });
+    }, { deep: true });
 
     return {
       myOptions: options,

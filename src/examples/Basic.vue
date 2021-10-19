@@ -80,7 +80,7 @@ export default {
     ],
     value: null,
     secondValue: '1',
-    disabled: false,
+    disabled: null,
   }),
   watch: {
     value(val) {
