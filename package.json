@@ -6,13 +6,13 @@
   "scripts": {
     "serve": "vue-cli-service serve --host localhost",
     "build": "node build.js",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "build:example": "vue-cli-service build --dest example",
     "postversion": "git push && git push --tags && echo Run: \"npm publish\"",
     "preversion": "npm run test:unit && npm run build && git add -A dist",
-    "test:unit": "vue-cli-service test:unit",
-    "test:unit-watch": "vue-cli-service test:unit --watch",
-    "test:ci": "vue-cli-service test:unit --ci --runInBand --reporters=default --reporters=jest-junit"
+    "test:ci": "vue-cli-service test:unit --ci --runInBand --reporters=default --reporters=jest-junit",
+    "test:unit-watch": "vue-cli-service test:unit --watch"
   },
   "main": "dist/index.js",
   "files": [
@@ -21,16 +21,17 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.12",
-    "@vue/cli-plugin-eslint": "^4.5.12",
-    "@vue/cli-plugin-unit-jest": "^5.0.0-alpha.8",
-    "@vue/cli-service": "^4.5.12",
-    "@vue/compiler-sfc": "^3.0.10",
+    "@vue/cli-plugin-babel": "^4.5.14",
+    "@vue/cli-plugin-eslint": "^4.5.14",
+    "@vue/cli-plugin-unit-jest": "^5.0.0-beta.6",
+    "@vue/cli-service": "^4.5.14",
+    "@vue/compiler-sfc": "^3.2.20",
     "@vue/composition-api": "^1.0.0-rc.6",
     "@vue/eslint-config-airbnb": "^5.3.0",
-    "@vue/test-utils": "^2.0.0-rc.4",
+    "@vue/test-utils": "^2.0.0-rc.16",
+    "@vue/vue3-jest": "^27.0.0-alpha.1",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.6.3",
+    "babel-jest": "^27.3.1",
     "bootstrap": "^3.4.1",
     "core-js": "^3.10.0",
     "eslint": "^6.7.2",
@@ -45,9 +46,7 @@
     "less-loader": "^5.0.0",
     "nyc": "^15.0.1",
     "typescript": "^4.2.3",
-    "vue": "^3.0.10",
-    "vue-demi": "^0.7.4",
-    "vue-jest": "^5.0.0-alpha.8"
+    "vue": "^3.2.20"
   },
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-rc.6",
