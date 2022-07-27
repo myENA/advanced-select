@@ -99,7 +99,7 @@
               </a>
             </span>
             <a v-else
-              :title="option.text"
+              :title="computeTitle(option)"
               href="#" @click="select($event, option.value)">
               <i
                 v-if="option.icon" :class="['fa', 'pos-rel', option.icon]"
@@ -583,6 +583,12 @@ export default {
         }
         return f;
       }, []);
+    },
+    computeTitle({ text = '', subtext = ''}) {
+      if(subtext) {
+        return `${text} - ${subtext}`;
+      }
+      return text;
     },
   },
   setup(props, ctx) {
