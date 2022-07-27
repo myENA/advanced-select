@@ -1,6 +1,6 @@
 {
   "name": "@myena/advanced-select",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Vue Advanced Select control used in ENA projects",
   "author": "Andy Ghiuta <andy.ghiuta@gmail.com>",
   "scripts": {
